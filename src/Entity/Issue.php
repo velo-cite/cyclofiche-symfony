@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\ReportRepository;
+use App\Repository\IssueRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ReportRepository::class)]
-class Report
+#[ORM\Entity(repositoryClass: IssueRepository::class)]
+class Issue
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -28,7 +28,7 @@ class Report
     /**
      * @var Collection<int, Photo>
      */
-    #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'report', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'issue', orphanRemoval: true)]
     private Collection $photos;
 
     #[ORM\Column(length: 255)]
@@ -107,7 +107,7 @@ class Report
     {
         if (!$this->photos->contains($photo)) {
             $this->photos->add($photo);
-            $photo->setReport($this);
+            $photo->setIssue($this);
         }
 
         return $this;
@@ -117,8 +117,8 @@ class Report
     {
         if ($this->photos->removeElement($photo)) {
             // set the owning side to null (unless already changed)
-            if ($photo->getReport() === $this) {
-                $photo->setReport(null);
+            if ($photo->getIssue() === $this) {
+                $photo->setIssue(null);
             }
         }
 

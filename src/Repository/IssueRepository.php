@@ -2,39 +2,39 @@
 
 namespace App\Repository;
 
-use App\Entity\Report;
+use App\Entity\Issue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Report>
+ * @extends ServiceEntityRepository<Issue>
  */
-class ReportRepository extends ServiceEntityRepository
+class IssueRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Report::class);
+        parent::__construct($registry, Issue::class);
     }
 
     //    /**
-    //     * @return Report[] Returns an array of Report objects
+    //     * @return Issue[] Returns an array of Issue objects
     //     */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
+    //        return $this->createQueryBuilder('i')
+    //            ->andWhere('i.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('r.id', 'ASC')
+    //            ->orderBy('i.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Report
+    //    public function findOneBySomeField($value): ?Issue
     //    {
     //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
+    //            ->andWhere('i.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()

@@ -18,7 +18,7 @@ class Photo
 
     #[ORM\ManyToOne(inversedBy: 'photos')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Report $report = null;
+    private ?Issue $issue = null;
 
     public function getId(): ?int
     {
@@ -37,14 +37,14 @@ class Photo
         return $this;
     }
 
-    public function getReport(): ?Report
+    public function getIssue(): ?Issue
     {
-        return $this->report;
+        return $this->issue;
     }
 
-    public function setReport(?Report $report): static
+    public function setIssue(?Issue $issue): static
     {
-        $this->report = $report;
+        $this->issue = $issue;
 
         return $this;
     }

@@ -1,58 +1,58 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Report{% endblock %}
+{% block title %}Issue{% endblock %}
 
 {% block body %}
-    <h1>Report</h1>
+    <h1>Issue</h1>
 
     <table class="table">
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ report.id }}</td>
+                <td>{{ issue.id }}</td>
             </tr>
             <tr>
                 <th>Type</th>
-                <td>{{ report.type }}</td>
+                <td>{{ issue.type }}</td>
             </tr>
             <tr>
                 <th>Localisation</th>
-                <td>{{ report.localisation }}</td>
+                <td>{{ issue.location }}</td>
             </tr>
             <tr>
                 <th>City</th>
-                <td>{{ report.city }}</td>
+                <td>{{ issue.city }}</td>
             </tr>
             <tr>
                 <th>Address</th>
-                <td>{{ report.address }}</td>
+                <td>{{ issue.address }}</td>
             </tr>
             <tr>
                 <th>Description</th>
-                <td>{{ report.description }}</td>
+                <td>{{ issue.description }}</td>
             </tr>
             <tr>
                 <th>Firstname</th>
-                <td>{{ report.firstname }}</td>
+                <td>{{ issue.firstname }}</td>
             </tr>
             <tr>
                 <th>Lastname</th>
-                <td>{{ report.lastname }}</td>
+                <td>{{ issue.lastname }}</td>
             </tr>
             <tr>
                 <th>Email</th>
-                <td>{{ report.email }}</td>
+                <td>{{ issue.email }}</td>
             </tr>
             <tr>
                 <th>Phone</th>
-                <td>{{ report.phone }}</td>
+                <td>{{ issue.phone }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_admin_report_index') }}">back to list</a>
+    <a href="{{ path('app_admin_issue_index') }}">back to list</a>
 
-    <a href="{{ path('app_admin_report_edit', {'id': report.id}) }}">edit</a>
+    <a href="{{ path('app_admin_issue_edit', {'id': issue.id}) }}">edit</a>
 
-    {{ include('admin/report/_delete_form.html.twig') }}
+    {{ include('admin/issue/_delete_form.html.twig') }}
 {% endblock %}
