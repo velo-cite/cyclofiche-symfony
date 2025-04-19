@@ -16,13 +16,29 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
-    '@hotwired/stimulus' => [
-        'version' => '3.2.2',
+    'admin' => [
+        'path' => './assets/admin.js',
+        'entrypoint' => true,
     ],
-    '@symfony/stimulus-bundle' => [
-        'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
+    'admin-lte' => [
+        'version' => '3.2.0',
     ],
-    '@hotwired/turbo' => [
-        'version' => '7.3.0',
+    'bootstrap' => [
+        'version' => '5.3.5',
+    ],
+    '@popperjs/core' => [
+        'version' => '2.11.8',
+    ],
+    'bootstrap/dist/css/bootstrap.min.css' => [
+        'version' => '5.3.5',
+        'type' => 'css',
+    ],
+    'admin-lte/dist/css/adminlte.min.css' => [
+        'version' => '4.0.0-beta3',
+        'type' => 'css',
+    ],
+    '@fortawesome/fontawesome-free/css/all.css' => [
+        'version' => '6.7.2',
+        'type' => 'css',
     ],
 ];

@@ -15,18 +15,17 @@ class Organisation
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $libelle = null;
+    public function __construct(
+        #[ORM\Column(length: 255)]
+        private string $libelle,
 
-    /**
-     * @var Collection<int, Area>
-     */
-    #[ORM\ManyToMany(targetEntity: Area::class, inversedBy: 'organisations')]
-    private Collection $areas;
-
-    public function __construct()
+        /**
+         * @var Collection<int, Area>
+         */
+        #[ORM\ManyToMany(targetEntity: Area::class, inversedBy: 'organisations', cascade: ['persist'])]
+        private Collection $areas,
+    )
     {
-        $this->areas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -34,16 +33,9 @@ class Organisation
         return $this->id;
     }
 
-    public function getLibelle(): ?string
+    public function getLibelle(): string
     {
         return $this->libelle;
-    }
-
-    public function setLibelle(string $libelle): static
-    {
-        $this->libelle = $libelle;
-
-        return $this;
     }
 
     /**
@@ -52,21 +44,5 @@ class Organisation
     public function getAreas(): Collection
     {
         return $this->areas;
-    }
-
-    public function addArea(Area $area): static
-    {
-        if (!$this->areas->contains($area)) {
-            $this->areas->add($area);
-        }
-
-        return $this;
-    }
-
-    public function removeArea(Area $area): static
-    {
-        $this->areas->removeElement($area);
-
-        return $this;
     }
 }

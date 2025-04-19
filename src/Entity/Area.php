@@ -16,21 +16,14 @@ class Area
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $libelle = null;
+    public function __construct(
+        #[ORM\Column(length: 255)]
+        private ?string $libelle = null,
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $coordinates = null;
-
-    /**
-     * @var Collection<int, Organisation>
-     */
-    #[ORM\ManyToMany(targetEntity: Organisation::class, mappedBy: 'areas')]
-    private Collection $organisations;
-
-    public function __construct()
+        #[ORM\Column(type: Types::TEXT)]
+        private ?string $coordinates = null,
+    )
     {
-        $this->organisations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -43,49 +36,8 @@ class Area
         return $this->libelle;
     }
 
-    public function setLibelle(string $libelle): static
-    {
-        $this->libelle = $libelle;
-
-        return $this;
-    }
-
     public function getCoordinates(): ?string
     {
         return $this->coordinates;
-    }
-
-    public function setCoordinates(string $coordinates): static
-    {
-        $this->coordinates = $coordinates;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Organisation>
-     */
-    public function getOrganisations(): Collection
-    {
-        return $this->organisations;
-    }
-
-    public function addOrganisation(Organisation $organisation): static
-    {
-        if (!$this->organisations->contains($organisation)) {
-            $this->organisations->add($organisation);
-            $organisation->addArea($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrganisation(Organisation $organisation): static
-    {
-        if ($this->organisations->removeElement($organisation)) {
-            $organisation->removeArea($this);
-        }
-
-        return $this;
     }
 }

@@ -42,7 +42,7 @@ final class Version20250419140305 extends AbstractMigration
             CREATE INDEX IDX_14B784184BD2A4C0 ON photo (report_id)
         SQL);
         $this->addSql(<<<'SQL'
-            CREATE TABLE report (id SERIAL NOT NULL, type VARCHAR(255) NOT NULL, localisation TEXT NOT NULL, city VARCHAR(255) NOT NULL, address VARCHAR(255) NOT NULL, description TEXT NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, phone VARCHAR(255) NOT NULL, PRIMARY KEY(id))
+            CREATE TABLE report (id SERIAL NOT NULL, type VARCHAR(255) NOT NULL, location TEXT NOT NULL, city VARCHAR(255) NOT NULL, address VARCHAR(255) NOT NULL, description TEXT NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, phone VARCHAR(255) NOT NULL, PRIMARY KEY(id))
         SQL);
         $this->addSql(<<<'SQL'
             CREATE TABLE "user" (id SERIAL NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, phone VARCHAR(15) DEFAULT NULL, PRIMARY KEY(id))

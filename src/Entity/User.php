@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Model\UserCreated;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -17,29 +18,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180)]
-    private ?string $email = null;
-
-    /**
-     * @var list<string> The user roles
-     */
-    #[ORM\Column]
-    private array $roles = [];
-
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
-    private ?string $password = null;
+    private string $password;
 
-    #[ORM\Column(length: 255)]
-    private ?string $firstname = null;
+    public function __construct(
+        #[ORM\Column(length: 180)]
+        private string $email,
 
-    #[ORM\Column(length: 255)]
-    private ?string $lastname = null;
+        #[ORM\Column(length: 255)]
+        private string $firstname,
 
-    #[ORM\Column(length: 15, nullable: true)]
-    private ?string $phone = null;
+        #[ORM\Column(length: 255)]
+        private string $lastname,
+
+        #[ORM\Column(length: 15, nullable: true)]
+        private ?string $phone = null,
+
+        /**
+         * @var list<string> The user roles
+         */
+        #[ORM\Column]
+        private array $roles = ['ROLE_USER'],
+    ) {
+    }
+
+    public static function create(UserCreated $userCreatedAdmin): self
+    {
+        return new self(
+            $userCreatedAdmin->email,
+            $userCreatedAdmin->firstname,
+            $userCreatedAdmin->lastname,
+            $userCreatedAdmin->phone,
+            $userCreatedAdmin->roles,
+        );
+    }
+
+    public function updatePassword(string $password): void
+    {
+        $this->password = $password;
+    }
 
     public function getId(): ?int
     {
@@ -49,13 +69,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getEmail(): ?string
     {
         return $this->email;
-    }
-
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-
-        return $this;
     }
 
     /**
@@ -83,28 +96,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @param list<string> $roles
-     */
-    public function setRoles(array $roles): static
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
      * @see PasswordAuthenticatedUserInterface
      */
     public function getPassword(): ?string
     {
         return $this->password;
-    }
-
-    public function setPassword(string $password): static
-    {
-        $this->password = $password;
-
-        return $this;
     }
 
     /**
@@ -121,34 +117,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->firstname;
     }
 
-    public function setFirstname(string $firstname): static
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
     public function getLastname(): ?string
     {
         return $this->lastname;
     }
 
-    public function setLastname(string $lastname): static
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
     public function getPhone(): ?string
     {
         return $this->phone;
-    }
-
-    public function setPhone(?string $phone): static
-    {
-        $this->phone = $phone;
-
-        return $this;
     }
 }

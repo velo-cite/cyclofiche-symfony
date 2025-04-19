@@ -20,7 +20,7 @@ class Report
     private ?string $type = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $localisation = null;
+    private ?string $location = null;
 
     #[ORM\Column(length: 255)]
     private ?string $city = null;
@@ -71,14 +71,14 @@ class Report
         return $this;
     }
 
-    public function getLocalisation(): ?string
+    public function getLocation(): ?string
     {
-        return $this->localisation;
+        return $this->location;
     }
 
-    public function setLocalisation(string $localisation): static
+    public function setLocation(string $location): static
     {
-        $this->localisation = $localisation;
+        $this->location = $location;
 
         return $this;
     }

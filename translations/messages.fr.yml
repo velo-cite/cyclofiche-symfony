@@ -1,0 +1,6 @@
+admin:
+  menu:
+    reportList: "Liste des cyclofiches"
+    userList: "Liste des utilisateurs"
+    organisationList: "Liste des organisations"
+    areaList: "Liste des zones"
