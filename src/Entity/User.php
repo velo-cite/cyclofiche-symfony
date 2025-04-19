@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Model\UserCreated;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -24,25 +26,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private string $password;
 
+    /**
+     * @var Collection<int, Issue>
+     */
+    #[ORM\OneToMany(targetEntity: Issue::class, mappedBy: 'creator')]
+    private Collection $issues;
+
     public function __construct(
         #[ORM\Column(length: 180)]
         private string $email,
-
         #[ORM\Column(length: 255)]
         private string $firstname,
-
         #[ORM\Column(length: 255)]
         private string $lastname,
-
         #[ORM\Column(length: 15, nullable: true)]
         private ?string $phone = null,
-
         /**
          * @var list<string> The user roles
          */
         #[ORM\Column]
-        private array $roles = ['ROLE_USER'],
-    ) {
+        private array $roles = ['ROLE_USER']
+    )
+    {
+        $this->issues = new ArrayCollection();
     }
 
     public static function create(UserCreated $userCreatedAdmin): self
@@ -125,5 +131,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getPhone(): ?string
     {
         return $this->phone;
+    }
+
+    /**
+     * @return Collection<int, Issue>
+     */
+    public function getIssues(): Collection
+    {
+        return $this->issues;
+    }
+
+    public function addIssue(Issue $issue): static
+    {
+        if (!$this->issues->contains($issue)) {
+            $this->issues->add($issue);
+            $issue->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIssue(Issue $issue): static
+    {
+        if ($this->issues->removeElement($issue)) {
+            // set the owning side to null (unless already changed)
+            if ($issue->getCreator() === $this) {
+                $issue->setCreator(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Area;
+use App\Entity\IssueCategory;
 use App\Entity\Organisation;
 use App\Entity\User;
 use App\Model\UserCreated;
@@ -34,8 +35,42 @@ class AdminFixtures extends Fixture
             $areaBordeaux,
         ]));
 
+        $areaBordeaux = new Area('Bordeaux', '');
+
+        $organisationPoleBordeaux = new Organisation('Pole Bordeaux', new ArrayCollection([
+            $areaBordeaux,
+        ]));
+
         $manager->persist($organisation);
+        $manager->persist($organisationPoleBordeaux);
         $manager->persist($userAdmin);
+
+        $issueChantiers = new IssueCategory('Chantiers');
+        $issueSignalisationMarquageAuSol = new IssueCategory('Signalisation / Marquage au sol');
+        $issueStationnementSauvage = new IssueCategory('Stationnement sauvage');
+        $issueDeteriorationDeLaChaussee = new IssueCategory('Déterioration de la chaussée');
+        $issueStationnementVelo = new IssueCategory('Stationnement vélo');
+        $issueDoubleSensCyclable = new IssueCategory('Double sens cyclable');
+        $issueVegetationSauvage = new IssueCategory('Végétation sauvage');
+        $issueManifestation = new IssueCategory('Manifestation');
+        $issueAutres = new IssueCategory('Autres');
+        $issueRondPoint = new IssueCategory('Rond-point');
+        $issueAmenagementsDeCarrefours = new IssueCategory('Aménagements de carrefours');
+        $issuePistesOuBandeCyclables = new IssueCategory('Pistes ou bande cyclables');
+
+        $manager->persist($issueChantiers);
+        $manager->persist($issueSignalisationMarquageAuSol);
+        $manager->persist($issueStationnementSauvage);
+        $manager->persist($issueDeteriorationDeLaChaussee);
+        $manager->persist($issueStationnementVelo);
+        $manager->persist($issueDoubleSensCyclable);
+        $manager->persist($issueVegetationSauvage);
+        $manager->persist($issueManifestation);
+        $manager->persist($issueAutres);
+        $manager->persist($issueRondPoint);
+        $manager->persist($issueAmenagementsDeCarrefours);
+        $manager->persist($issuePistesOuBandeCyclables);
+
         $manager->flush();
 
         $this->addReference(self::ADMIN_USER_REFERENCE, $userAdmin);

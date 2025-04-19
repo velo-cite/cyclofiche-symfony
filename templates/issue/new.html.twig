@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Report{% endblock %}
+{% block title %}New Issue{% endblock %}
 
 {% block body %}
-    <h1>Create new Report</h1>
+    <h1>Create new Issue</h1>
 
-    {{ include('report/_form.html.twig') }}
+    {{ include('issue/_form.html.twig') }}
 
-    <a href="{{ path('app_report_index') }}">back to list</a>
+    <a href="{{ path('app_home') }}">back to list</a>
 {% endblock %}

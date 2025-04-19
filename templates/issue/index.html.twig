@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Report index{% endblock %}
+{% block title %}Issue index{% endblock %}
 
 {% block body %}
-    <h1>Report index</h1>
+    <h1>Issue index</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Type</th>
-                <th>Localisation</th>
+                <th>Location</th>
                 <th>City</th>
                 <th>Address</th>
                 <th>Description</th>
@@ -22,22 +22,18 @@
             </tr>
         </thead>
         <tbody>
-        {% for report in reports %}
+        {% for issue in issues %}
             <tr>
-                <td>{{ report.id }}</td>
-                <td>{{ report.type }}</td>
-                <td>{{ report.localisation }}</td>
-                <td>{{ report.city }}</td>
-                <td>{{ report.address }}</td>
-                <td>{{ report.description }}</td>
-                <td>{{ report.firstname }}</td>
-                <td>{{ report.lastname }}</td>
-                <td>{{ report.email }}</td>
-                <td>{{ report.phone }}</td>
-                <td>
-                    <a href="{{ path('app_report_show', {'id': report.id}) }}">show</a>
-                    <a href="{{ path('app_report_edit', {'id': report.id}) }}">edit</a>
-                </td>
+                <td>{{ issue.id }}</td>
+                <td>{{ issue.category.libelle }}</td>
+                <td>{{ issue.location }}</td>
+                <td>{{ issue.city }}</td>
+                <td>{{ issue.address }}</td>
+                <td>{{ issue.description }}</td>
+                <td>{{ issue.firstname }}</td>
+                <td>{{ issue.lastname }}</td>
+                <td>{{ issue.email }}</td>
+                <td>{{ issue.phone }}</td>
             </tr>
         {% else %}
             <tr>
@@ -47,5 +43,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_report_new') }}">Create new</a>
+    <a href="{{ path('app_report_an_issue') }}">Create new</a>
 {% endblock %}

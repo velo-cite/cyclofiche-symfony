@@ -4,3 +4,8 @@ admin:
     userList: "Liste des utilisateurs"
     organisationList: "Liste des organisations"
     areaList: "Liste des zones"
+
+front:
+  issue:
+    report: 'Déclarer un problème'
+  login: 'Se connecter'

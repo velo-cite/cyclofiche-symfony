@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Model\Issue\IssueCreated;
+use App\Model\Issue\IssueStatut;
 use App\Repository\IssueRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -16,43 +18,72 @@ class Issue
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $type = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $location = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $city = null;
-
     /**
      * @var Collection<int, Photo>
      */
     #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'issue', orphanRemoval: true)]
     private Collection $photos;
 
-    #[ORM\Column(length: 255)]
-    private ?string $address = null;
+    public function __construct(
+        #[ORM\ManyToOne(inversedBy: 'issues')]
+        #[ORM\JoinColumn(nullable: false)]
+        private IssueCategory $category,
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $description = null;
+        #[ORM\Column(length: 255)]
+        private string    $state,
 
-    #[ORM\Column(length: 255)]
-    private ?string $firstname = null;
+        #[ORM\Column(type: Types::TEXT)]
+        private string    $location,
 
-    #[ORM\Column(length: 255)]
-    private ?string $lastname = null;
+        #[ORM\Column(length: 255)]
+        private string    $city,
 
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
+        #[ORM\Column(length: 255)]
+        private string    $address,
 
-    #[ORM\Column(length: 255)]
-    private ?string $phone = null;
+        #[ORM\Column(type: Types::TEXT)]
+        private string    $description,
 
-    public function __construct()
+        #[ORM\Column(length: 255)]
+        private string    $firstname,
+
+        #[ORM\Column(length: 255)]
+        private string    $lastname,
+
+        #[ORM\Column(length: 255)]
+        private string    $email,
+
+        #[ORM\ManyToOne(inversedBy: 'issues')]
+        #[ORM\JoinColumn(nullable: true)]
+        private ?User $creator = null,
+
+        #[ORM\Column(length: 255)]
+        private ?string    $phone = null,
+    )
     {
         $this->photos = new ArrayCollection();
     }
+
+    public static function createFromIssueCreated(IssueCreated $created): self
+    {
+        if (!$created->creator && (!$created->firstname || !$created->lastname || !$created->email)) {
+            throw new \LogicException('The user or the (email and firstname and lastname) must be set');
+        }
+        return new self(
+            $created->category,
+            IssueStatut::WAITING->value,
+            $created->location,
+            $created->city,
+            $created->address,
+            $created->description,
+            $created->firstname,
+            $created->lastname,
+            $created->email,
+            $created->creator,
+            $created->phone,
+        );
+    }
+
 
     public function getId(): ?int
     {
@@ -64,35 +95,14 @@ class Issue
         return $this->type;
     }
 
-    public function setType(string $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function getLocation(): ?string
     {
         return $this->location;
     }
 
-    public function setLocation(string $location): static
-    {
-        $this->location = $location;
-
-        return $this;
-    }
-
     public function getCity(): ?string
     {
         return $this->city;
-    }
-
-    public function setCity(string $city): static
-    {
-        $this->city = $city;
-
-        return $this;
     }
 
     /**
@@ -130,23 +140,9 @@ class Issue
         return $this->address;
     }
 
-    public function setAddress(string $address): static
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
-    }
-
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
     }
 
     public function getFirstname(): ?string
@@ -154,23 +150,9 @@ class Issue
         return $this->firstname;
     }
 
-    public function setFirstname(?string $firstname): static
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
     public function getLastname(): ?string
     {
         return $this->lastname;
-    }
-
-    public function setLastname(?string $lastname): static
-    {
-        $this->lastname = $lastname;
-
-        return $this;
     }
 
     public function getEmail(): ?string
@@ -178,21 +160,31 @@ class Issue
         return $this->email;
     }
 
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
     public function getPhone(): ?string
     {
         return $this->phone;
     }
 
-    public function setPhone(?string $phone): static
+    public function getCreator(): ?User
     {
-        $this->phone = $phone;
+        return $this->creator;
+    }
+
+    public function setCreator(?User $creator): static
+    {
+        $this->creator = $creator;
+
+        return $this;
+    }
+
+    public function getCategory(): ?IssueCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?IssueCategory $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }

@@ -44,7 +44,7 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="info">
-                    <i class="nav-icon fas fa-user"></i> {{ app.user.firstname }} {{ app.user.lastname }}
+                    <i class="nav-icon fas fa-user"></i> {% if app.user %}{{ app.user.firstname }} {{ app.user.lastname }}{% endif %}
                 </div>
             </div>
 
