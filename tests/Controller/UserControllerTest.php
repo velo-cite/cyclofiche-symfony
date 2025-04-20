@@ -65,7 +65,7 @@ final class UserControllerTest extends WebTestCase
     {
         $this->markTestIncomplete();
         $fixture = new User();
-        $fixture->setPassword('My Title');
+        $fixture->definePassword('My Title');
         $fixture->setEmail('My Title');
         $fixture->setRoles('My Title');
         $fixture->setFirstname('My Title');
@@ -87,7 +87,7 @@ final class UserControllerTest extends WebTestCase
     {
         $this->markTestIncomplete();
         $fixture = new User();
-        $fixture->setPassword('Value');
+        $fixture->definePassword('Value');
         $fixture->setEmail('Value');
         $fixture->setRoles('Value');
         $fixture->setFirstname('Value');
@@ -124,7 +124,7 @@ final class UserControllerTest extends WebTestCase
     {
         $this->markTestIncomplete();
         $fixture = new User();
-        $fixture->setPassword('Value');
+        $fixture->definePassword('Value');
         $fixture->setEmail('Value');
         $fixture->setRoles('Value');
         $fixture->setFirstname('Value');

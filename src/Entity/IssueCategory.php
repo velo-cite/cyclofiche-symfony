@@ -27,8 +27,7 @@ class IssueCategory
 
         #[ORM\Column(length: 255)]
         private ?string $image = 'image.png',
-    )
-    {
+    ) {
         $this->issues = new ArrayCollection();
     }
 

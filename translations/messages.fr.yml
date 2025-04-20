@@ -8,4 +8,9 @@ admin:
 front:
   issue:
     report: 'Déclarer un problème'
-  login: 'Se connecter'
+  user:
+    login: 'Se connecter'
+    logout: 'Se déconnecter'
+    register: 'Créer un compte'
+    confirmationEmailSend: "Un e-mail contenant un lient de validation vous a été envoyé afin de confirmer l'inscription"
+    confirmationEmailDone: 'Votre compte a bien été activé.'

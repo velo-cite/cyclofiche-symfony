@@ -2,17 +2,20 @@
 
 namespace App\Entity;
 
+use App\Model\User\UserRegistered;
 use App\Model\UserCreated;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -32,6 +35,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Issue::class, mappedBy: 'creator')]
     private Collection $issues;
 
+    #[ORM\Column]
+    private bool $isVerified = false;
+
+    /**
+     * @var list<string> The user roles
+     */
+    #[ORM\Column]
+    private array $roles = ['ROLE_USER'];
+
     public function __construct(
         #[ORM\Column(length: 180)]
         private string $email,
@@ -41,13 +53,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         private string $lastname,
         #[ORM\Column(length: 15, nullable: true)]
         private ?string $phone = null,
-        /**
-         * @var list<string> The user roles
-         */
-        #[ORM\Column]
-        private array $roles = ['ROLE_USER']
-    )
-    {
+    ) {
         $this->issues = new ArrayCollection();
     }
 
@@ -58,7 +64,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $userCreatedAdmin->firstname,
             $userCreatedAdmin->lastname,
             $userCreatedAdmin->phone,
-            $userCreatedAdmin->roles,
+        );
+    }
+
+    public static function register(UserRegistered $userRegistered): self
+    {
+        return new self(
+            $userRegistered->email,
+            $userRegistered->firstname,
+            $userRegistered->lastname,
+            $userRegistered->phone,
         );
     }
 
@@ -114,8 +129,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+    }
+
+    public function definePassword(string $hashPassword): void
+    {
+        $this->password = $hashPassword;
     }
 
     public function getFirstname(): ?string
@@ -161,5 +179,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function confirmeAccount(): void
+    {
+        $this->isVerified = true;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
     }
 }

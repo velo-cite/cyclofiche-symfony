@@ -30,37 +30,36 @@ class Issue
         private IssueCategory $category,
 
         #[ORM\Column(length: 255)]
-        private string    $state,
+        private string $state,
 
         #[ORM\Column(type: Types::TEXT)]
-        private string    $location,
+        private string $location,
 
         #[ORM\Column(length: 255)]
-        private string    $city,
+        private string $city,
 
         #[ORM\Column(length: 255)]
-        private string    $address,
+        private string $address,
 
         #[ORM\Column(type: Types::TEXT)]
-        private string    $description,
+        private string $description,
 
         #[ORM\Column(length: 255)]
-        private string    $firstname,
+        private string $firstname,
 
         #[ORM\Column(length: 255)]
-        private string    $lastname,
+        private string $lastname,
 
         #[ORM\Column(length: 255)]
-        private string    $email,
+        private string $email,
 
         #[ORM\ManyToOne(inversedBy: 'issues')]
         #[ORM\JoinColumn(nullable: true)]
         private ?User $creator = null,
 
         #[ORM\Column(length: 255)]
-        private ?string    $phone = null,
-    )
-    {
+        private ?string $phone = null,
+    ) {
         $this->photos = new ArrayCollection();
     }
 
@@ -69,6 +68,7 @@ class Issue
         if (!$created->creator && (!$created->firstname || !$created->lastname || !$created->email)) {
             throw new \LogicException('The user or the (email and firstname and lastname) must be set');
         }
+
         return new self(
             $created->category,
             IssueStatut::WAITING->value,
@@ -83,7 +83,6 @@ class Issue
             $created->phone,
         );
     }
-
 
     public function getId(): ?int
     {

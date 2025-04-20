@@ -22,7 +22,7 @@ class AdminFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $userCreatedAdmin = new UserCreated('paul@velo-cite.org', 'paul', 'lopez', ['ROLE_ADMIN'], '0620301030');
+        $userCreatedAdmin = new UserCreated('paul@velo-cite.org', 'paul', 'lopez', '0620301030');
         $userAdmin = User::create($userCreatedAdmin);
         $pass = $this->hasher->hashPassword($userAdmin, 'test');
         $userAdmin->updatePassword($pass);

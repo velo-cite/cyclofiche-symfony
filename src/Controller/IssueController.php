@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Issue;
-use App\Entity\IssueCategory;
 use App\Entity\User;
 use App\Form\IssueType;
 use App\Model\Issue\IssueCreated;

@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\Issue;
 use App\Entity\IssueCategory;
 use App\Model\Issue\IssueCreated;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -15,11 +14,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class IssueType extends AbstractType
 {
-
     public function __construct(
-        private readonly Security $security
-    )
-    {
+        private readonly Security $security,
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
