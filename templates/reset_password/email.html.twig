@@ -1,0 +1,9 @@
+<h1>Hi!</h1>
+
+<p>{{ 'front.forgotpassword.email.followLinkSentence'|trans }}</p>
+
+<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+
+<p>{{ 'front.forgotpassword.email.expirationSentence'|trans }} {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+
+<p>Cheers!</p>

@@ -14,3 +14,21 @@ front:
     register: 'Créer un compte'
     confirmationEmailSend: "Un e-mail contenant un lient de validation vous a été envoyé afin de confirmer l'inscription"
     confirmationEmailDone: 'Votre compte a bien été activé.'
+    forgotPassword: 'Mot de passe oublié'
+  forgotpassword:
+    title: 'Réinitialisation de votre mot de passe'
+    newpassword: 'Nouveau mot de passe'
+    repeatpassword: 'Répétez le mot de passe'
+    requestExplanation: 'Saisissez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.'
+    sendPasswordResetEmail: "Envoyer l'email de réinitialisation"
+    sent:
+      sentence: "Si un compte correspondant à votre adresse e-mail existe, un e-mail contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe vient d'être envoyé."
+      expirationSentence: "Ce lien expirera dans"
+      notReceivedSentence: "Si vous ne recevez pas d'e-mail, veuillez vérifier votre dossier spam ou"
+      tryAgain: "réessayez"
+    email:
+      yourPasswordResetRequest: 'Votre demande de réinitialisation de mot de passe'
+      followLinkSentence: "Pour réinitialiser votre mot de passe, veuillez consulter le lien suivant"
+      expirationSentence: 'Ce lien expirera dans'
+  button:
+    save: 'Enregistrer'

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Password Reset Email Sent{% endblock %}
+
+{% block body %}
+    <p>
+        {{ 'front.forgotpassword.sent.sentence'|trans }}<br>
+        {{ 'front.forgotpassword.sent.expirationSentence'|trans }}  {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+    </p>
+    <p>{{ 'front.forgotpassword.sent.notReceivedSentence'|trans }} <a href="{{ path('app_forgot_password_request') }}">{{ 'front.forgotpassword.sent.tryAgain'|trans }}</a>.</p>
+{% endblock %}
