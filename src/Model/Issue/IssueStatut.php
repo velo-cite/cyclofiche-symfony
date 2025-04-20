@@ -4,8 +4,10 @@ namespace App\Model\Issue;
 
 enum IssueStatut: string
 {
-    case WAITING = 'waiting';
-    case IN_PROGRESS = 'in_progress';
-    case ANSWERED = 'answered';
-    case PROCESSED = 'processed';
+
+    case SUBMITTED = 'submitted';
+    case REVIEW_MODERATOR = 'review_moderator';
+    case REVIEW_METROPOLE = 'review_metropole';
+    case DONE = 'done';
+    case IGNORED = 'ignored';
 }

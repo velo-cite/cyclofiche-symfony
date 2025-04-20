@@ -1,0 +1,36 @@
+framework:
+    workflows:
+        cyclofiche:
+            type: 'state_machine'
+            marking_store:
+                type: 'method'
+                property: 'state'
+            supports:
+                App\Entity\Issue
+            initial_marking: submitted
+            places:
+                - submitted
+                - review_moderator
+                - review_metropole
+                - done
+                - ignored
+            transitions:
+                to_check:
+                    from: submitted
+                    to: review_moderator
+                ask_information:
+                    guard: "is_granted('ROLE_MODERATOR')"
+                    from: review_moderator
+                    to: submitted
+                to_check_metropole:
+                    guard: "is_granted('ROLE_MODERATOR')"
+                    from: review_moderator
+                    to: review_metropole
+                to_answer:
+                    guard: "is_granted('ROLE_METROPOLE')"
+                    from: review_metropole
+                    to: done
+                to_ignore:
+                    guard: "is_granted('ROLE_METROPOLE')"
+                    from: review_metropole
+                    to: ignored

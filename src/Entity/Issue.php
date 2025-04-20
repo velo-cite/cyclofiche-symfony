@@ -24,13 +24,13 @@ class Issue
     #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'issue', orphanRemoval: true)]
     private Collection $photos;
 
+    #[ORM\Column(length: 255)]
+    private ?string $state = IssueStatut::SUBMITTED->value;
+
     public function __construct(
         #[ORM\ManyToOne(inversedBy: 'issues')]
         #[ORM\JoinColumn(nullable: false)]
         private IssueCategory $category,
-
-        #[ORM\Column(length: 255)]
-        private string $state,
 
         #[ORM\Column(type: Types::TEXT)]
         private string $location,
@@ -71,7 +71,6 @@ class Issue
 
         return new self(
             $created->category,
-            IssueStatut::WAITING->value,
             $created->location,
             $created->city,
             $created->address,
@@ -92,6 +91,16 @@ class Issue
     public function getType(): ?string
     {
         return $this->type;
+    }
+
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    public function setState(?string $state): void
+    {
+        $this->state = $state;
     }
 
     public function getLocation(): ?string

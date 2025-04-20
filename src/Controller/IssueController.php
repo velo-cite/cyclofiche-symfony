@@ -6,16 +6,24 @@ use App\Entity\Issue;
 use App\Entity\User;
 use App\Form\IssueType;
 use App\Model\Issue\IssueCreated;
+use App\Model\Issue\IssueStatut;
 use App\Repository\IssueRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Workflow\WorkflowInterface;
 
 #[Route('/issue')]
 final class IssueController extends AbstractController
 {
+
+    public function __construct(private WorkflowInterface $cycloficheStateMachine)
+    {
+    }
+
     #[Route(name: 'app_issue_index', methods: ['GET'])]
     public function index(IssueRepository $issueRepository): Response
     {
@@ -40,10 +48,15 @@ final class IssueController extends AbstractController
                 }
             }
 
-            $entityManager->persist(Issue::createFromIssueCreated($issueCreated));
-            $entityManager->flush();
+            $issue = Issue::createFromIssueCreated($issueCreated);
+            try {
+                $this->cycloficheStateMachine->apply($issue, 'to_check');
+            } catch (\LogicException) {
+                throw $this->createAccessDeniedException('Forbidden to report an issue');
+            }
 
-            // todo launch event for IssueCreated
+            $entityManager->persist($issue);
+            $entityManager->flush();
 
             return $this->redirectToRoute('app_issue_index', [], Response::HTTP_SEE_OTHER);
         }

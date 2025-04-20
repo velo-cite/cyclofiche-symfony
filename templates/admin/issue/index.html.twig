@@ -13,7 +13,6 @@
                 <th>Localisation</th>
                 <th>City</th>
                 <th>Address</th>
-                <th>Description</th>
                 <th>Firstname</th>
                 <th>Lastname</th>
                 <th>Email</th>
@@ -25,11 +24,10 @@
         {% for issue in issues %}
             <tr>
                 <td>{{ issue.id }}</td>
-                <td>{{ issue.type }}</td>
+                <td>{{ issue.state }}</td>
                 <td>{{ issue.location }}</td>
                 <td>{{ issue.city }}</td>
                 <td>{{ issue.address }}</td>
-                <td>{{ issue.description }}</td>
                 <td>{{ issue.firstname }}</td>
                 <td>{{ issue.lastname }}</td>
                 <td>{{ issue.email }}</td>
