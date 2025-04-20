@@ -7,5 +7,26 @@
 
     {{ include('issue/_form.html.twig') }}
 
+    <button onclick="getLocation()">Try It</button>
+
     <a href="{{ path('app_home') }}">back to list</a>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(success, error);
+            }
+        }
+
+        function success(position) {
+            var x = document.getElementById("issue_location");
+            x.value = position.coords.latitude + ", " + position.coords.longitude;
+        }
+
+        function error() {
+            alert("Sorry, no position available.");
+        }
+    </script>
 {% endblock %}
