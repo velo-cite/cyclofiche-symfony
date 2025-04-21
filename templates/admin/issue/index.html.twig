@@ -1,22 +1,18 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Report index{% endblock %}
+{% block title %}Issue index{% endblock %}
 
 {% block body %}
-    <h1>Report index</h1>
+    <h1>Issue index</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Type</th>
-                <th>Localisation</th>
                 <th>City</th>
                 <th>Address</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Email</th>
-                <th>Phone</th>
+                <th>User</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -25,14 +21,17 @@
             <tr>
                 <td>{{ issue.id }}</td>
                 <td>{{ issue.state }}</td>
-                <td>{{ issue.location }}</td>
                 <td>{{ issue.city }}</td>
                 <td>{{ issue.address }}</td>
-                <td>{{ issue.firstname }}</td>
-                <td>{{ issue.lastname }}</td>
-                <td>{{ issue.email }}</td>
-                <td>{{ issue.phone }}</td>
                 <td>
+                    {% if issue.creator %}
+                        {{ issue.creator.firstname }} {{ issue.creator.lastname }} (<a href="{{ path('app_admin_user_show', {'id': issue.creator.id}) }}">{{ 'admin.general.consult'|trans }}</a>)
+                    {% else %}
+                        {{ issue.firstname }} {{ issue.lastname }}
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('app_admin_issue_show', {'id': issue.id }) }}">View</a>
                 </td>
             </tr>
         {% else %}

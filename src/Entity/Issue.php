@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Admin\Moderator;
+use App\Model\Admin\IssueAccepted;
 use App\Model\Issue\IssueCreated;
 use App\Model\Issue\IssueStatut;
 use App\Repository\IssueRepository;
@@ -26,6 +28,13 @@ class Issue
 
     #[ORM\Column(length: 255)]
     private ?string $state = IssueStatut::SUBMITTED->value;
+
+    #[ORM\ManyToOne(targetEntity: Moderator::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Moderator $moderator = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $commentModerator = null;
 
     public function __construct(
         #[ORM\ManyToOne(inversedBy: 'issues')]
@@ -195,5 +204,11 @@ class Issue
         $this->category = $category;
 
         return $this;
+    }
+
+    public function acceptFromIssueAccepted(IssueAccepted $issueAccepted, Moderator $moderator): void
+    {
+        $this->moderator = $moderator;
+        $this->commentModerator = $issueAccepted->comment;
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Model;
+namespace App\Model\Admin;
 
-class UserCreated
+class ModeratorCreated
 {
     public function __construct(
         public ?string $email = null,

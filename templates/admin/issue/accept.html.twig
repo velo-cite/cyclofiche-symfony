@@ -1,0 +1,11 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Accept Issue{% endblock %}
+
+{% block body %}
+    <h1>Accept new Issue</h1>
+
+    {{ include('admin/issue/_form.html.twig') }}
+
+    <a href="{{ path('app_admin_issue_index') }}">back to list</a>
+{% endblock %}

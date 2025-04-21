@@ -4,6 +4,10 @@ admin:
     userList: "Liste des utilisateurs"
     organisationList: "Liste des organisations"
     areaList: "Liste des zones"
+  moderator:
+    issue_accepted: "Vous venez d'autoriser la cyclofiche. Elle sera envoyée aux personnes chargées de s'en occuper."
+  general:
+    consult: 'Consulter'
 
 front:
   issue:

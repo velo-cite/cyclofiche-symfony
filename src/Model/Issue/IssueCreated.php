@@ -23,6 +23,7 @@ class IssueCreated
 
     public function setCreatedBy(User $creator): void
     {
+        $this->creator = $creator;
         $this->firstname = $creator->getFirstname();
         $this->lastname = $creator->getLastname();
         $this->email = $creator->getEmail();

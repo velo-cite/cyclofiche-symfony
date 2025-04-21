@@ -12,11 +12,11 @@
                 <td>{{ issue.id }}</td>
             </tr>
             <tr>
-                <th>Type</th>
-                <td>{{ issue.type }}</td>
+                <th>State</th>
+                <td>{{ issue.state }}</td>
             </tr>
             <tr>
-                <th>Localisation</th>
+                <th>Location</th>
                 <td>{{ issue.location }}</td>
             </tr>
             <tr>
@@ -50,9 +50,14 @@
         </tbody>
     </table>
 
+    {% if workflow_can(issue, 'ask_information') %}
+        <button>Ask information</button>
+    {% endif %}
+    {% if workflow_can(issue, 'to_check_metropole') %}
+        <a href="{{ path('app_admin_issue_accept', {'id': issue.id}) }}">to_check_metropole</a>
+    {% endif %}
     <a href="{{ path('app_admin_issue_index') }}">back to list</a>
 
-    <a href="{{ path('app_admin_issue_edit', {'id': issue.id}) }}">edit</a>
+{#    <a href="{{ path('app_admin_issue_edit', {'id': issue.id}) }}">edit</a>#}
 
-    {{ include('admin/issue/_delete_form.html.twig') }}
 {% endblock %}

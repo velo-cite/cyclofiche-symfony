@@ -19,7 +19,6 @@ use Symfony\Component\Workflow\WorkflowInterface;
 #[Route('/issue')]
 final class IssueController extends AbstractController
 {
-
     public function __construct(private WorkflowInterface $cycloficheStateMachine)
     {
     }

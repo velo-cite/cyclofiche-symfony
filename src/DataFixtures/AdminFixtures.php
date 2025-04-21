@@ -2,10 +2,12 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Admin\Moderator;
 use App\Entity\Area;
 use App\Entity\IssueCategory;
 use App\Entity\Organisation;
 use App\Entity\User;
+use App\Model\Admin\ModeratorCreated;
 use App\Model\UserCreated;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,6 +17,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class AdminFixtures extends Fixture
 {
     public const ADMIN_USER_REFERENCE = 'admin-user';
+    public const MODERATOR_USER_REFERENCE = 'moderator-user';
 
     public function __construct(private UserPasswordHasherInterface $hasher)
     {
@@ -22,10 +25,15 @@ class AdminFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $userCreatedAdmin = new UserCreated('paul@velo-cite.org', 'paul', 'lopez', '0620301030');
-        $userAdmin = User::create($userCreatedAdmin);
-        $pass = $this->hasher->hashPassword($userAdmin, 'test');
-        $userAdmin->updatePassword($pass);
+        $userCreatedModerator = new ModeratorCreated('moderator@velo-cite.org', 'paul', 'lopez', '0620301030');
+        $moderator = Moderator::create($userCreatedModerator);
+        $pass = $this->hasher->hashPassword($moderator, 'test');
+        $moderator->updatePassword($pass);
+
+//        $userCreatedAdmin = new AdminCreated('admin@velo-cite.org', 'paul', 'lopez', '0620301030');
+//        $admin = Admin::create($userCreatedAdmin);
+//        $pass = $this->hasher->hashPassword($admin, 'test');
+//        $admin->updatePassword($pass);
 
         $area = new Area('Bordeaux Métropole', '');
         $areaBordeaux = new Area('Bordeaux', '');
@@ -43,7 +51,7 @@ class AdminFixtures extends Fixture
 
         $manager->persist($organisation);
         $manager->persist($organisationPoleBordeaux);
-        $manager->persist($userAdmin);
+        $manager->persist($moderator);
 
         $issueChantiers = new IssueCategory('Chantiers');
         $issueSignalisationMarquageAuSol = new IssueCategory('Signalisation / Marquage au sol');
@@ -57,6 +65,7 @@ class AdminFixtures extends Fixture
         $issueRondPoint = new IssueCategory('Rond-point');
         $issueAmenagementsDeCarrefours = new IssueCategory('Aménagements de carrefours');
         $issuePistesOuBandeCyclables = new IssueCategory('Pistes ou bande cyclables');
+        $issueM12Manquant = new IssueCategory('M12 manquant');
 
         $manager->persist($issueChantiers);
         $manager->persist($issueSignalisationMarquageAuSol);
@@ -70,9 +79,11 @@ class AdminFixtures extends Fixture
         $manager->persist($issueRondPoint);
         $manager->persist($issueAmenagementsDeCarrefours);
         $manager->persist($issuePistesOuBandeCyclables);
+        $manager->persist($issueM12Manquant);
 
         $manager->flush();
 
-        $this->addReference(self::ADMIN_USER_REFERENCE, $userAdmin);
+        $this->addReference(self::MODERATOR_USER_REFERENCE, $moderator);
+//        $this->addReference(self::ADMIN_USER_REFERENCE, $admin);
     }
 }
