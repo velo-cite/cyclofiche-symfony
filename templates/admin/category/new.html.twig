@@ -1,0 +1,11 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'admin.category.new'|trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'admin.category.new'|trans }}</h1>
+
+    {{ include('admin/organisation/_form.html.twig') }}
+
+    <a href="{{ path('app_admin_organisation_index') }}">back to list</a>
+{% endblock %}

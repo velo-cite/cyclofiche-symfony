@@ -4,10 +4,15 @@ admin:
     userList: "Liste des utilisateurs"
     organisationList: "Liste des organisations"
     areaList: "Liste des zones"
+    issueCategoryList: 'Liste des catégories'
   moderator:
     issue_accepted: "Vous venez d'autoriser la cyclofiche. Elle sera envoyée aux personnes chargées de s'en occuper."
   general:
     consult: 'Consulter'
+  category:
+    created: 'Categorie créée avec succès.'
+    new: "Création d'une nouvelle catégorie"
+    add: "Ajouter une nouvelle catégorie"
 
 front:
   issue:

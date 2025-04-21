@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Model\Admin\IssueCategoryCreated;
 use App\Repository\IssueCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -29,6 +30,14 @@ class IssueCategory
         private ?string $image = 'image.png',
     ) {
         $this->issues = new ArrayCollection();
+    }
+
+    public static function createFromIssueCategoryCreated(IssueCategoryCreated $issueCategoryCreated): self
+    {
+        return new self(
+            $issueCategoryCreated->libelle,
+            $issueCategoryCreated->image,
+        );
     }
 
     public function getId(): ?int
