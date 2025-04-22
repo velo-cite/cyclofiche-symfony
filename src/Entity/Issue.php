@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Admin\Moderator;
 use App\Model\Admin\IssueAccepted;
+use App\Model\Admin\IssueRejected;
 use App\Model\Issue\IssueCreated;
 use App\Model\Issue\IssueStatut;
 use App\Repository\IssueRepository;
@@ -210,5 +211,11 @@ class Issue
     {
         $this->moderator = $moderator;
         $this->commentModerator = $issueAccepted->comment;
+    }
+
+    public function rejectFromIssueRejected(IssueRejected $issueRejected, Moderator $moderator): void
+    {
+        $this->moderator = $moderator;
+        $this->commentModerator = $issueRejected->comment;
     }
 }

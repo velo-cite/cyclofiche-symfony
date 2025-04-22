@@ -51,10 +51,10 @@
     </table>
 
     {% if workflow_can(issue, 'ask_information') %}
-        <button>Ask information</button>
+        <a class="btn bg-danger" href="{{ path('app_admin_issue_reject', {'id': issue.id}) }}">{{ 'admin.global.reject'|trans }}</a>
     {% endif %}
     {% if workflow_can(issue, 'to_check_metropole') %}
-        <a href="{{ path('app_admin_issue_accept', {'id': issue.id}) }}">to_check_metropole</a>
+        <a class="btn bg-success" href="{{ path('app_admin_issue_accept', {'id': issue.id}) }}">{{ 'admin.global.accept'|trans }}</a>
     {% endif %}
     <a href="{{ path('app_admin_issue_index') }}">back to list</a>
 

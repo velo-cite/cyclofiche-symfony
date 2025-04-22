@@ -5,7 +5,9 @@ namespace App\Controller\Admin;
 use App\Entity\Admin\Moderator;
 use App\Entity\Issue;
 use App\Form\Admin\IssueModerationType;
+use App\Form\Admin\IssueRejectedModerationType;
 use App\Model\Admin\IssueAccepted;
+use App\Model\Admin\IssueRejected;
 use App\Model\Issue\IssueStatut;
 use App\Repository\IssueRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -68,6 +70,36 @@ final class IssueController extends AbstractController
         }
 
         return $this->render('admin/issue/accept.html.twig', [
+            'issue' => $issue,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route(path: '/reject/{id}', name: 'app_admin_issue_reject', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_MODERATOR')]
+    public function reject(Request $request, Issue $issue, EntityManagerInterface $entityManager): Response
+    {
+        if (!$this->cycloficheStateMachine->can($issue, 'submitted')) {
+            $this->redirectToRoute('app_admin_issue_show', ['id' => $issue->getId()]);
+        }
+        $issueRejected = new IssueRejected($issue);
+        $form = $this->createForm(IssueRejectedModerationType::class, $issueRejected);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Moderator $user */
+            $user = $this->getUser();
+            $user->rejectIssue($issueRejected);
+
+            $this->cycloficheStateMachine->apply($issue, 'ask_information');
+            $entityManager->flush();
+
+            $this->addFlash('success', $this->translator->trans('admin.moderator.issue_rejected'));
+            return $this->redirectToRoute('app_admin_issue_index');
+        }
+
+        return $this->render('admin/issue/reject.html.twig', [
             'issue' => $issue,
             'form' => $form->createView(),
         ]);
