@@ -1,0 +1,36 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Moderator index{% endblock %}
+
+{% block body %}
+    <h1>Moderator index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for moderator in moderators %}
+            <tr>
+                <td>{{ moderator.id }}</td>
+                <td>{{ moderator.email }}</td>
+                <td>{{ moderator.firstname }}</td>
+                <td>{{ moderator.lastname }}</td>
+                <td>{{ moderator.phone }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_moderator_new') }}">Create new</a>
+{% endblock %}

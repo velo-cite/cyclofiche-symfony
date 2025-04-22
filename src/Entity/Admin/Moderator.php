@@ -2,14 +2,9 @@
 
 namespace App\Entity\Admin;
 
-use App\Entity\Issue;
 use App\Model\Admin\IssueAccepted;
+use App\Model\Admin\IssueRejected;
 use App\Model\Admin\ModeratorCreated;
-use App\Model\User\UserRegistered;
-use App\Model\UserCreated;
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -29,7 +24,7 @@ class Moderator implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?string $password = null;
 
     /**
@@ -87,6 +82,11 @@ class Moderator implements UserInterface, PasswordAuthenticatedUserInterface
     public function acceptIssue(IssueAccepted $issueAccepted): void
     {
         $issueAccepted->issue->acceptFromIssueAccepted($issueAccepted, $this);
+    }
+
+    public function rejectIssue(IssueRejected $issueRejected): void
+    {
+        $issueRejected->issue->rejectFromIssueRejected($issueRejected, $this);
     }
 
     public function getId(): ?int

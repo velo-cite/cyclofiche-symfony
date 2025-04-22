@@ -5,14 +5,19 @@ admin:
     organisationList: "Liste des organisations"
     areaList: "Liste des zones"
     issueCategoryList: 'Liste des catégories'
+    moderatorList: 'Liste des modérateurs'
   moderator:
     issue_accepted: "Vous venez d'autoriser la cyclofiche. Elle sera envoyée aux personnes chargées de s'en occuper."
+    issue_rejected: 'Vous venez de refuser la cyclofiche.'
   general:
     consult: 'Consulter'
   category:
     created: 'Categorie créée avec succès.'
     new: "Création d'une nouvelle catégorie"
     add: "Ajouter une nouvelle catégorie"
+  global:
+    reject: 'Rejeter la cyclofiche'
+    accept: 'Accepter la cyclofiche'
 
 front:
   issue:
