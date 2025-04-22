@@ -10,7 +10,6 @@
             <tr>
                 <th>Id</th>
                 <th>Email</th>
-                <th>Roles</th>
                 <th>Firstname</th>
                 <th>Lastname</th>
                 <th>Phone</th>
@@ -22,13 +21,11 @@
             <tr>
                 <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>{{ user.firstname }}</td>
                 <td>{{ user.lastname }}</td>
                 <td>{{ user.phone }}</td>
                 <td>
                     <a href="{{ path('app_admin_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

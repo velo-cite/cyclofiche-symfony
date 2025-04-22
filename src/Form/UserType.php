@@ -18,13 +18,6 @@ class UserType extends AbstractType
             ->add('email', EmailType::class)
             ->add('firstname', TextType::class)
             ->add('lastname', TextType::class)
-            ->add('roles', ChoiceType::class, [
-                'multiple' => true,
-                'choices' => [
-                    'ROLE_ADMIN' => 'ROLE_ADMIN',
-                    'ROLE_USER' => 'ROLE_USER',
-                ],
-            ])
             ->add('phone', TextType::class, [
                 'required' => false,
             ])
