@@ -35,22 +35,11 @@ class AdminFixtures extends Fixture
 //        $pass = $this->hasher->hashPassword($admin, 'test');
 //        $admin->updatePassword($pass);
 
-        $area = new Area('Bordeaux Métropole', '');
-        $areaBordeaux = new Area('Bordeaux', '');
+        $organisationBM = new Organisation('Bordeaux Métropole');
+        $organisationDepartementGironde = new Organisation('Gironde');
 
-        $organisation = new Organisation('Bordeaux Métropole', new ArrayCollection([
-            $area,
-            $areaBordeaux,
-        ]));
-
-        $areaBordeaux = new Area('Bordeaux', '');
-
-        $organisationPoleBordeaux = new Organisation('Pole Bordeaux', new ArrayCollection([
-            $areaBordeaux,
-        ]));
-
-        $manager->persist($organisation);
-        $manager->persist($organisationPoleBordeaux);
+        $manager->persist($organisationBM);
+        $manager->persist($organisationDepartementGironde);
         $manager->persist($moderator);
 
         $issueChantiers = new IssueCategory('Chantiers');

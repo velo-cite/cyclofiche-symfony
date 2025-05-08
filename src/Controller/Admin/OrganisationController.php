@@ -25,11 +25,12 @@ final class OrganisationController extends AbstractController
     #[Route('/new', name: 'app_admin_organisation_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $organisation = new Organisation();
-        $form = $this->createForm(OrganisationType::class, $organisation);
+        $form = $this->createForm(OrganisationType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $organisationCreated = $form->getData();
+            $organisation = Organisation::create($organisationCreated);
             $entityManager->persist($organisation);
             $entityManager->flush();
 
@@ -37,7 +38,6 @@ final class OrganisationController extends AbstractController
         }
 
         return $this->render('admin/organisation/new.html.twig', [
-            'organisation' => $organisation,
             'form' => $form,
         ]);
     }

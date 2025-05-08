@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Model\Admin\OrganisationCreated;
 use App\Repository\OrganisationRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,13 +18,14 @@ class Organisation
     public function __construct(
         #[ORM\Column(length: 255)]
         private string $libelle,
-
-        /**
-         * @var Collection<int, Area>
-         */
-        #[ORM\ManyToMany(targetEntity: Area::class, inversedBy: 'organisations', cascade: ['persist'])]
-        private Collection $areas,
     ) {
+    }
+
+    public static function create(OrganisationCreated $organisationCreated): self
+    {
+        return new self(
+            $organisationCreated->libelle,
+        );
     }
 
     public function getId(): ?int
@@ -34,13 +36,5 @@ class Organisation
     public function getLibelle(): string
     {
         return $this->libelle;
-    }
-
-    /**
-     * @return Collection<int, Area>
-     */
-    public function getAreas(): Collection
-    {
-        return $this->areas;
     }
 }
