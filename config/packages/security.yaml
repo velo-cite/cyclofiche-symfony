@@ -7,12 +7,13 @@ security:
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
-                class: App\Entity\User
+                class: App\Entity\OrganisationUser
                 property: email
         moderator_user_provider:
             entity:
                 class: App\Entity\Admin\Moderator
                 property: email
+        # used to reload user from session & other features (e.g. switch_user)
 
     role_hierarchy:
         ROLE_MODERATOR: ROLE_USER

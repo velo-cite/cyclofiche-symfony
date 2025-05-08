@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Organisation;
 use App\Form\OrganisationType;
 use App\Repository\OrganisationRepository;
+use App\Repository\OrganisationUserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,10 +44,13 @@ final class OrganisationController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_admin_organisation_show', methods: ['GET'])]
-    public function show(Organisation $organisation): Response
+    public function show(Organisation $organisation, OrganisationUserRepository $organisationUserRepository): Response
     {
         return $this->render('admin/organisation/show.html.twig', [
             'organisation' => $organisation,
+            'organisation_users' => $organisationUserRepository->findBy([
+                'organisation' => $organisation,
+            ]),
         ]);
     }
 

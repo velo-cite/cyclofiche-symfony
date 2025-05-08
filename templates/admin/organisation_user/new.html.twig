@@ -1,0 +1,11 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}New OrganisationUser{% endblock %}
+
+{% block body %}
+    <h1>Create new OrganisationUser</h1>
+
+    {{ include('admin/organisation_user/_form.html.twig') }}
+
+    <a href="{{ path('app_admin_organisation_show', {'id' : organisation.id }) }}">back to list</a>
+{% endblock %}
