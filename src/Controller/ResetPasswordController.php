@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Admin\Moderator;
+use App\Entity\Admin\OrganisationUser;
 use App\Entity\User;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Proxy\DefaultProxyClassNameResolver;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -27,7 +30,7 @@ class ResetPasswordController extends AbstractController
 
     public function __construct(
         private ResetPasswordHelperInterface $resetPasswordHelper,
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -44,8 +47,7 @@ class ResetPasswordController extends AbstractController
             /** @var string $email */
             $email = $form->get('email')->getData();
 
-            return $this->processSendingPasswordResetEmail($email, $mailer, $translator
-            );
+            return $this->processSendingPasswordResetEmail($email, $mailer, $translator);
         }
 
         return $this->render('reset_password/request.html.twig', [
@@ -133,6 +135,19 @@ class ResetPasswordController extends AbstractController
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
         ]);
+
+         if (null === $user) {
+             $user = $this->entityManager->getRepository(Moderator::class)->findOneBy([
+                 'email' => $emailFormData,
+             ]);
+         }
+
+        if (null === $user) {
+            $user = $this->entityManager->getRepository(OrganisationUser::class)->findOneBy([
+                'email' => $emailFormData,
+            ]);
+        }
+
 
         // Do not reveal whether a user account was found or not.
         if (!$user) {

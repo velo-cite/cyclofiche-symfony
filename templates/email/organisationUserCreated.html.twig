@@ -1,12 +1,7 @@
 {# templates/emails/signup.html.twig #}
-<h1>Welcome {{ organisationUser.firstname organisationUser.lastname }}!</h1>
+<h1>Création de votre compte sur les cyclofiches</h1>
 
 <p>
-    You signed up as {{ username }} the following email:
-</p>
-<p><code>{{ email.to[0].address }}</code></p>
-
-<p>
-    <a href="#">Activate your account</a>
-    (this link is valid until {{ expiration_date|date('F jS') }})
+    Un compte vient d'être créé sur la plateforme des cyclofiches.
+    Merci d'utiliser la fonctionnalité des <a href="{{ url('app_forgot_password_request') }}">mots de passes oubliés</a> pour créer votre mot de passe.
 </p>

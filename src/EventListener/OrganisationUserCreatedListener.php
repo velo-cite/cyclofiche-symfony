@@ -2,6 +2,7 @@
 
 namespace App\EventListener;
 
+use App\Entity\Admin\OrganisationUser;
 use App\Event\OrganisationUserAddedEvent;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
@@ -9,9 +10,10 @@ use Symfony\Component\Mailer\MailerInterface;
 
 final class OrganisationUserCreatedListener
 {
-    public function __construct(private MailerInterface $mailer)
+    public function __construct(
+        private MailerInterface $mailer,
+    )
     {
-
     }
 
     #[AsEventListener(event: OrganisationUserAddedEvent::class)]
@@ -27,5 +29,6 @@ final class OrganisationUserCreatedListener
                 'organisationUser' => $event->getOrganisationUser(),
             ])
         );
+
     }
 }

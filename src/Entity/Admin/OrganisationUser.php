@@ -109,11 +109,9 @@ class OrganisationUser implements UserInterface, PasswordAuthenticatedUserInterf
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function definePassword(string $hashPassword): void
     {
-        $this->password = $password;
-
-        return $this;
+        $this->password = $hashPassword;
     }
 
     /**

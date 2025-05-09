@@ -7,13 +7,19 @@ security:
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
-                class: App\Entity\OrganisationUser
+                class: App\Entity\User
+                property: email
+        chain_provider:
+            chain:
+                providers: [organisation_user_provider, moderator_user_provider]
+        organisation_user_provider:
+            entity:
+                class: App\Entity\Admin\OrganisationUser
                 property: email
         moderator_user_provider:
             entity:
                 class: App\Entity\Admin\Moderator
                 property: email
-        # used to reload user from session & other features (e.g. switch_user)
 
     role_hierarchy:
         ROLE_MODERATOR: ROLE_USER
@@ -27,7 +33,7 @@ security:
             security: false
         admin:
             pattern: ^/admin
-            provider: moderator_user_provider
+            provider: chain_provider
             custom_authenticator: App\Security\AdminAuthenticator
 
         main:
