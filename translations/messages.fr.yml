@@ -6,6 +6,7 @@ admin:
     areaList: "Liste des zones"
     issueCategoryList: 'Liste des catégories'
     moderatorList: 'Liste des modérateurs'
+    logoutList: 'Déconnexion'
   moderator:
     issue_accepted: "Vous venez d'autoriser la cyclofiche. Elle sera envoyée aux personnes chargées de s'en occuper."
     issue_rejected: 'Vous venez de refuser la cyclofiche.'

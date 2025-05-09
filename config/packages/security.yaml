@@ -35,6 +35,9 @@ security:
             pattern: ^/admin
             provider: chain_provider
             custom_authenticator: App\Security\AdminAuthenticator
+            logout:
+                path: admin_logout
+                target: admin_login
 
         main:
             lazy: true
