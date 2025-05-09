@@ -39,6 +39,7 @@
             <span class="brand-text font-weight-light">Cyclofiche</span>
         </a>
 
+        {% if app.user %}
         <!-- Sidebar -->
         <div class="sidebar">
             <!-- Sidebar user panel (optional) -->
@@ -106,6 +107,7 @@
             <!-- /.sidebar-menu -->
         </div>
         <!-- /.sidebar -->
+        {% endif %}
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
