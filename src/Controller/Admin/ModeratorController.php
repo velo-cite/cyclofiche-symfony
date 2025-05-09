@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Admin\Moderator;
+use App\Event\Admin\ModeratorCreatedEvent;
 use App\Form\Admin\ModeratorType;
 use App\Repository\Admin\ModeratorRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[Route('/admin/moderator')]
 final class ModeratorController extends AbstractController
@@ -23,7 +25,7 @@ final class ModeratorController extends AbstractController
     }
 
     #[Route('/new', name: 'app_admin_moderator_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher): Response
     {
         $form = $this->createForm(ModeratorType::class);
         $form->handleRequest($request);
@@ -33,6 +35,9 @@ final class ModeratorController extends AbstractController
             $moderator = Moderator::create($moderatorCreated);
             $entityManager->persist($moderator);
             $entityManager->flush();
+
+            $event = new ModeratorCreatedEvent($moderator);
+            $eventDispatcher->dispatch($event);
 
             return $this->redirectToRoute('app_admin_moderator_index', [], Response::HTTP_SEE_OTHER);
         }

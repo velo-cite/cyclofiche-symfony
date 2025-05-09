@@ -60,7 +60,7 @@ class Moderator implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function updatePassword(string $pass): void
+    public function definePassword(string $pass): void
     {
         $this->password = $pass;
     }

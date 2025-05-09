@@ -28,7 +28,7 @@ class AdminFixtures extends Fixture
         $userCreatedModerator = new ModeratorCreated('moderator@velo-cite.org', 'paul', 'lopez', '0620301030');
         $moderator = Moderator::create($userCreatedModerator);
         $pass = $this->hasher->hashPassword($moderator, 'test');
-        $moderator->updatePassword($pass);
+        $moderator->definePassword($pass);
 
 //        $userCreatedAdmin = new AdminCreated('admin@velo-cite.org', 'paul', 'lopez', '0620301030');
 //        $admin = Admin::create($userCreatedAdmin);

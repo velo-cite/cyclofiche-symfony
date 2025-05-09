@@ -4,14 +4,11 @@ namespace App\Controller\Admin;
 
 use App\Entity\Admin\OrganisationUser;
 use App\Entity\Organisation;
-use App\Event\OrganisationUserAddedEvent;
+use App\Event\Admin\OrganisationUserAddedEvent;
 use App\Form\Admin\OrganisationUserAddedType;
-use App\Form\Admin\OrganisationUserType;
 use App\Model\Admin\OrganisationUserAdded;
-use App\Repository\OrganisationUserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;

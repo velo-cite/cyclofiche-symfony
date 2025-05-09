@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Event;
+namespace App\Event\Admin;
 
 use App\Entity\Admin\OrganisationUser;
 use Symfony\Contracts\EventDispatcher\Event;
