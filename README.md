@@ -12,6 +12,8 @@ automatiser envoie de mail à la métropole
 automatiser envoie aux antennes locales
 + contact@velo-cite.org + ludo
 
+avoir la possibilité d'envoyer 3 photos
+
 controle de la cyclo (titre, catégorie)
 
 lors de la validation : afficher les autres cyclofiches lors de la validation
@@ -22,24 +24,35 @@ automatiser envoie sur slack
 
 pas de gestion des priorités
 
-export csv
+Bo : 
+filtre par commune et tri par date ou type
+export csv (avec filtre)
 
-affichage du délai de traitement / temps de (non) réponse ?
+Affichage du délai de traitement / temps de (non) réponse ?
 
 Utilisateur : possibilité de marquer l'observation comme résolue
-Pour les autres utilisateurs : signaler le traitement effectué
+Pour les autres utilisateurs : signaler le traitement effectué (observation de terrain)
 
 Suivi par mail à chaque changement d'état (de la part de VC ou de la métropole) 
 
 Possibilité d'"upvote" de la part d'autre utilisateur·rice
 voir pour éviter les doublons à la saisie ()
 
-Statut  :
+Statut : (avec une explication obligatoire ?)
+- Refusé (par Vélo-Cité)
+- En attente de traitement
+- En cours de traitement / fiche transmise au service compétent
+- A l’étude
+- Intervention programmée
+- Intervention prévue à moyen terme (2 ans)
+- Intervention prévue à long terme
+- Intervention refusée ou impossible / résolu
+- Intervention effectuée / résolu
 
-Refusé (par Vélo-Cité)
-En attente de traitement
-En cours de traitement / fiche transmise au service compétent
-A l’étude
-Intervention programmée
-Intervention refusée ou impossible / résolu
-Intervention effectuée / résolu
+Travaux : "merci de penser à prendre en photo l'arrêté affiché sur la barrière"
+
+Stationnement auto gênant illicite : 
+- traitement différencié, heatmap de stationnement gênant. 
+- Pas d'affichage sur la carte de base
+
+Heurodaté les évolutions de status
