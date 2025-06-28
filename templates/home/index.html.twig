@@ -3,11 +3,5 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-    {% if not app.user %}
-        <a href="{{ path('app_login') }}">{{ 'front.user.login'|trans }}</a>
-        <a href="{{ path('app_register') }}">{{ 'front.user.register'|trans }}</a>
-    {% else %}
-        <a href="{{ path('app_logout') }}">{{ 'front.user.logout'|trans }}</a>
-    {% endif %}
-    <a href="{{ path('app_report_an_issue') }}">{{ 'front.issue.report'|trans }}</a>
+    <div id="map"></div>
 {% endblock %}

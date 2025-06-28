@@ -1,3 +1,53 @@
-body {
-    background-color: skyblue;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#map {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.input {
+    @apply w-full p-2 border border-gray-300 rounded mb-3 text-black;
+}
+select {
+    @apply w-full p-2 border border-gray-300 rounded mb-3 text-black;
+}
+.btn {
+    @apply px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition;
+}
+
+.btn-red {
+    @apply rounded bg-white text-redimportant hover:bg-redimportant hover:text-white transition border border-white;
+}
+
+@keyframes marker-drop {
+    0% {
+        transform: translateY(-200px) scaleY(0.9);
+        opacity: 0;
+    }
+    5% {
+        opacity: 0.7;
+    }
+    50% {
+        transform: translateY(0px) scaleY(1);
+        opacity: 1;
+    }
+    65% {
+        transform: translateY(-17px) scaleY(0.9);
+        opacity: 1;
+    }
+    75% {
+        transform: translateY(-22px) scaleY(0.9);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0px) scaleY(1);
+        opacity: 1;
+    }
+}
+.marker-drop {
+    animation: marker-drop 0.3s linear forwards 1s;
 }

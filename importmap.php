@@ -41,4 +41,11 @@ return [
         'version' => '6.7.2',
         'type' => 'css',
     ],
+    'maplibre-gl' => [
+        'version' => '5.6.0',
+    ],
+    'maplibre-gl/dist/maplibre-gl.min.css' => [
+        'version' => '5.6.0',
+        'type' => 'css',
+    ],
 ];
