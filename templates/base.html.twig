@@ -21,8 +21,8 @@
         </div>
         {% block body %}{% endblock %}
         {% block menu %}
-            <div class="fixed z-1 bottom-0 w-full max-w-lg -translate-x-1/2 left-1/2 bg-velocite rounded-t-3xl px-8 py-4 shadow-lg text-white space-y-3 opacity-75 hidden">
-                <button class="w-full bg-white text-sky-600 font-semibold py-2 rounded-lg hover:bg-gray-100">
+            <div id="menu" class="fixed z-1 bottom-0 w-full max-w-lg -translate-x-1/2 left-1/2 bg-velocite rounded-t-3xl px-8 py-4 shadow-lg text-white space-y-3 opacity-75">
+                <button id="btn-signaler-un-probleme" class="w-full bg-white text-sky-600 font-semibold py-2 rounded-lg hover:bg-gray-100">
                     Signaler un problème
                 </button>
 
@@ -44,7 +44,7 @@
                 </div>
             </div>
 
-            <div class="fixed z-1 bottom-0 max-w-lg -translate-x-1/2 left-1/2 bg-redimportant text-white rounded-t-3xl p-6 rounded-white border">
+            <div id="menuIssue" class="fixed z-1 bottom-0 max-w-lg -translate-x-1/2 left-1/2 bg-redimportant text-white rounded-t-3xl p-6 rounded-white border hidden">
                 <form id="reportForm" class="space-y-6">
                     <!-- Étape 0 : Connexion ou saisie manuelle -->
                     <div class="step">

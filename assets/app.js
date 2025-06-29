@@ -88,6 +88,9 @@ document.addEventListener('DOMContentLoaded', () => {
      * Gestion de la saisie d'une nouvelle issue
      */
     const steps = document.querySelectorAll(".step");
+    const btnAlertIssue = document.getElementById("btn-signaler-un-probleme");
+    const menu = document.getElementById("menu");
+    const menuIssue = document.getElementById("menuIssue");
     const form = document.getElementById("reportForm");
     const nextBtn = document.getElementById("nextBtn");
     const prevBtn = document.getElementById("prevBtn");
@@ -102,8 +105,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentmarker;
 
     let currentStep = 0;
+    let connectionStep = 0;
+
+    btnAlertIssue.addEventListener("click", () => {
+        menu.classList.add('hidden');
+        menuIssue.classList.remove('hidden');
+        showStep(currentStep);
+    });
 
     function showStep(i) {
+        if (i === connectionStep && localStorage.getItem('jwt')) {
+            currentStep++;
+            i++;
+        }
+        debugger;
         steps.forEach((step, index) => step.classList.toggle("hidden", index !== i));
         prevBtn.classList.toggle("hidden", i === 0);
         nextBtn.textContent = (i === steps.length - 2) ? "Envoyer" : "Suivant >";
