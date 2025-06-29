@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const { token } = await res.json();
-            localStorage.setItem("jwt", token); // 🔐 Stockage du JWT
+            localStorage.setItem("jwt", token);
 
             showStep(currentStep ++);
         } catch (err) {
@@ -199,9 +199,13 @@ document.addEventListener('DOMContentLoaded', () => {
             photos: [] // à gérer si upload actif
         };
         try {
+            const token = localStorage.getItem("jwt");
             const res = await fetch("/api/issues", {
                 method: "POST",
-                headers: { "Content-Type": "application/ld+json" },
+                headers: {
+                    "Content-Type": "application/ld+json",
+                    "Authorization": `Bearer ${token}`
+                },
                 body: JSON.stringify(data)
             });
 

@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
@@ -13,6 +12,7 @@ use App\Model\Admin\IssueAccepted;
 use App\Model\Admin\IssueRejected;
 use App\Model\Issue\IssueCreated;
 use App\Model\Issue\IssueStatut;
+use App\Processor\Issue\CreateIssueProcessor;
 use App\Repository\IssueRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,7 +21,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: IssueRepository::class)]
 #[ApiResource]
-#[Post]
+#[Post(
+    uriTemplate: '/issues',
+    denormalizationContext: ['groups' => ['issue:create']],
+    input: IssueCreated::class,
+    output: Issue::class,
+    processor: CreateIssueProcessor::class
+)]
 #[Put(security: "is_granted('ROLE_ADMIN') or object.owner == user")]
 #[GetCollection]
 #[Patch]
