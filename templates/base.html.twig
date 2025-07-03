@@ -49,18 +49,23 @@
                     <!-- Étape 0 : Connexion ou saisie manuelle -->
                     <div class="step">
                         <h2 class="text-xl font-semibold mb-4">Connexion</h2>
-                        <p class="mb-4">Souhaitez-vous vous connecter ou saisir vos informations manuellement ?</p>
+                        <p class="mb-4">Souhaitez-vous vous connecter ou saisir vos informations personnelles ?</p>
 
-                        <div class="space-y-4">
+                        <div id="loginBloc" class="mb-4">
                             <button type="button" id="loginBtn" class="btn w-full bg-green-600 hover:bg-green-700">Se connecter</button>
-                            <button type="button" id="manualEntryBtn" class="btn w-full">Saisir mes informations manuellement</button>
+
+                            <!-- Formulaire de connexion simplifié -->
+                            <div id="loginForm" class="mt-6 hidden space-y-3">
+                                <input name="loginEmail" type="email" placeholder="Email" class="input" />
+                                <input name="loginPassword" type="password" placeholder="Password" class="input" />
+                                <button type="button" id="validateLogin" class="btn w-full bg-blue-500 hover:bg-blue-600">Valider</button>
+                            </div>
                         </div>
 
-                        <!-- Formulaire de connexion simplifié -->
-                        <div id="loginForm" class="mt-6 hidden space-y-3">
-                            <input name="loginEmail" type="email" placeholder="Email" class="input" />
-                            <input name="loginPassword" type="password" placeholder="Password" class="input" />
-                            <button type="button" id="validateLogin" class="btn w-full bg-blue-500 hover:bg-blue-600">Valider</button>
+                        <hr class="mb-4">
+
+                        <div class="space-y-4">
+                            <button type="button" id="manualEntryBtn" class="btn w-full">Saisir mes informations personnelles</button>
                         </div>
 
                         <div id="manualInfoForm" class="mt-6 hidden space-y-3">
@@ -68,6 +73,7 @@
                             <input name="phone" type="tel" placeholder="Téléphone" class="input" />
                             <input name="firstname" type="text" placeholder="Prénom" class="input" />
                             <input name="lastname" type="text" placeholder="Nom" class="input" />
+                            <button type="button" id="validateManualInfoForm" class="btn w-full bg-blue-500 hover:bg-blue-600">Valider</button>
                         </div>
                     </div>
                     <!-- Étape 1 : Lieu du signalement -->
