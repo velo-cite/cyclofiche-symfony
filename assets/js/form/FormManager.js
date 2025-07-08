@@ -103,7 +103,7 @@ export class FormManager {
             state: "submitted",
             category: "/api/issue_categories/1",
             city: this.form.city.value,
-            address: this.form.address.value,
+            address: this.form.streetNumber.value + ' ' + this.form.streetName.value,
             location: `${this.form.latitude.value},${this.form.longitude.value}`,
             description: this.form.description.value,
             firstname: this.form.firstname.value,
