@@ -10,7 +10,6 @@ export class MapManager {
         });
 
         this.map.addControl(new maplibregl.NavigationControl());
-        this.currentMarker = null;
 
         this.map.on("load", () => {
             const splash = document.getElementById("splash");
@@ -39,9 +38,15 @@ export class MapManager {
         new maplibregl.Marker().setLngLat([coords[1], coords[0]]).setPopup(popup).addTo(this.map);
     }
 
-    dropMarker(lat, lng) {
-        this.currentMarker?.remove();
-        this.currentMarker = new maplibregl.Marker().setLngLat([lng, lat]).addTo(this.map);
+    dropMarker(lat, lng, form) {
+        let currentMarker = new maplibregl.Marker({draggable: true, color: "#00aeef",}).setLngLat([lng, lat]).addTo(this.map);
         this.map.flyTo({ center: [lng, lat], zoom: 16 });
+
+        function onDragEnd() {
+            const lngLat = currentMarker.getLngLat();
+            form.latitude.value = lngLat.lat;
+            form.longitude.value = lngLat.lng;
+        }
+        currentMarker.on('dragend', onDragEnd);
     }
 }

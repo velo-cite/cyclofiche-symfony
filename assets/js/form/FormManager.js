@@ -68,7 +68,7 @@ export class FormManager {
                     pos => {
                         this.form.latitude.value = pos.coords.latitude;
                         this.form.longitude.value = pos.coords.longitude;
-                        this.map.dropMarker(pos.coords.latitude, pos.coords.longitude);
+                        this.map.dropMarker(pos.coords.latitude, pos.coords.longitude, this.form);
                     },
                     () => alert("Impossible d’accéder à votre position.")
                 );
