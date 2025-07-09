@@ -1,4 +1,5 @@
 import maplibregl from '../../vendor/maplibre-gl/maplibre-gl.index.js';
+// import Point from './point.js'
 
 export class MapManager {
     constructor(containerId) {
