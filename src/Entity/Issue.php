@@ -18,6 +18,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: IssueRepository::class)]
 #[ApiResource]
@@ -29,52 +30,64 @@ use Doctrine\ORM\Mapping as ORM;
     processor: CreateIssueProcessor::class
 )]
 #[Put(security: "is_granted('ROLE_ADMIN') or object.owner == user")]
-#[GetCollection]
+#[GetCollection(normalizationContext: ['groups' => ['issue:read']])]
 #[Patch]
 class Issue
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['issue:read'])]
     private ?int $id = null;
 
     /**
      * @var Collection<int, Photo>
      */
     #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'issue', orphanRemoval: true)]
+    #[Groups(['issue:read'])]
     private Collection $photos;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['issue:read'])]
     private ?string $state = IssueStatut::SUBMITTED->value;
 
     #[ORM\ManyToOne(targetEntity: Moderator::class)]
     #[ORM\JoinColumn(nullable: true)]
+    #[Groups(['issue:read'])]
     private ?Moderator $moderator = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['issue:read'])]
     private ?string $commentModerator = null;
 
     public function __construct(
         #[ORM\ManyToOne(inversedBy: 'issues')]
         #[ORM\JoinColumn(nullable: false)]
+        #[Groups(['issue:read'])]
         private IssueCategory $category,
 
         #[ORM\Column(type: Types::TEXT)]
+        #[Groups(['issue:read'])]
         private string $location,
 
         #[ORM\Column(length: 255)]
+        #[Groups(['issue:read'])]
         private string $city,
 
         #[ORM\Column(length: 255)]
+        #[Groups(['issue:read'])]
         private string $address,
 
         #[ORM\Column(type: Types::TEXT)]
+        #[Groups(['issue:read'])]
         private string $description,
 
         #[ORM\Column(length: 255)]
+        #[Groups(['issue:read'])]
         private string $firstname,
 
         #[ORM\Column(length: 255)]
+        #[Groups(['issue:read'])]
         private string $lastname,
 
         #[ORM\Column(length: 255)]
@@ -82,6 +95,7 @@ class Issue
 
         #[ORM\ManyToOne(inversedBy: 'issues')]
         #[ORM\JoinColumn(nullable: true)]
+        #[Groups(['issue:read'])]
         private ?User $creator = null,
 
         #[ORM\Column(length: 255)]
