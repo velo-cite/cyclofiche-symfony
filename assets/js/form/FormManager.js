@@ -1,4 +1,5 @@
 import { getSelectedTags } from './formUtils.js';
+import {FlashBag} from './flashbag.js';
 
 export class FormManager {
     constructor(formEl, mapManager, apiClient) {
@@ -8,6 +9,7 @@ export class FormManager {
         this.steps = [...document.querySelectorAll(".step")];
         this.currentStep = 0;
         this.connectionStep = 0;
+        this.flashbag = new FlashBag();
     }
 
     init() {
@@ -113,13 +115,13 @@ export class FormManager {
             photos: [],
         };
 
-        const token = localStorage.getItem("jwt");
         try {
-            await this.api.submitIssue(data, token);
+            await this.api.submitIssue(data);
             this.currentStep = 0;
+            this.flashbag.success(e.message);
             this.showStep(this.currentStep);
         } catch (e) {
-            alert(e.message);
+            this.flashbag.error(e.message);
         }
     }
 }

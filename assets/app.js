@@ -15,6 +15,7 @@ import { FormManager } from './js/form/FormManager.js';
 document.addEventListener('DOMContentLoaded', async () => {
     const mapManager = new MapManager('map');
     const api = new ApiClient();
+    api.loadTokens(); // Pour réinitialiser après rechargement
 
     // Charge les markers
     try {

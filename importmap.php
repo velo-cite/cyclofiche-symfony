@@ -48,4 +48,7 @@ return [
         'version' => '5.6.0',
         'type' => 'css',
     ],
+    'jose' => [
+        'version' => '6.0.11',
+    ],
 ];

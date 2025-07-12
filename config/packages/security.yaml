@@ -52,7 +52,15 @@ security:
             pattern:   ^/api
             stateless: true
             provider: app_user_provider
+            entry_point: jwt
             jwt: ~
+            refresh_jwt:
+                check_path: /api/token/refresh # or, you may use the `api_refresh_token` route name
+                # or if you have more than one user provider
+                # provider: user_provider_name
+            logout:
+                path: api_token_invalidate
+
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -68,6 +76,7 @@ security:
          - { path: ^/admin/$, roles: [ROLE_MODERATOR, ROLE_METROPOLE] }
          - { path: ^/admin/, roles: ROLE_MODERATOR }
          - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/api/(login|token/refresh), roles: PUBLIC_ACCESS }
          - { path: ^/, roles: PUBLIC_ACCESS  }
 
 when@test:
