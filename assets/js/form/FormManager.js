@@ -13,6 +13,7 @@ export class FormManager {
     }
 
     init() {
+        this.loadCategories();
         this.bindUI();
         this.showStep(this.currentStep);
     }
@@ -103,7 +104,7 @@ export class FormManager {
     async submit() {
         const data = {
             state: "submitted",
-            category: "/api/issue_categories/1",
+            category: this.form.categoryLabel.value,
             city: this.form.city.value,
             address: this.form.streetNumber.value + ' ' + this.form.streetName.value,
             location: `${this.form.latitude.value},${this.form.longitude.value}`,
@@ -118,10 +119,23 @@ export class FormManager {
         try {
             await this.api.submitIssue(data);
             this.currentStep = 0;
-            this.flashbag.success(e.message);
+            this.flashbag.success("Signalement confirmé, merci beaucoup !");
             this.showStep(this.currentStep);
         } catch (e) {
             this.flashbag.error(e.message);
         }
+    }
+
+    loadCategories() {
+        let categorySelect = document.getElementById("categoryLabel");
+        this.api.fetchCategories()
+        .then(function (categories) {
+            categories.forEach(function (category) {
+                const option = document.createElement('option');
+                option.value = category['@id'];
+                option.textContent = category['libelle'];
+                categorySelect.appendChild(option);
+            })
+        })
     }
 }

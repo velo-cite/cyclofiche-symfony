@@ -10,6 +10,7 @@ use App\Repository\IssueCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: IssueCategoryRepository::class)]
 #[ApiResource(
@@ -23,6 +24,7 @@ class IssueCategory
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['issue:read'])]
     private ?int $id = null;
 
     /**
@@ -33,9 +35,11 @@ class IssueCategory
 
     public function __construct(
         #[ORM\Column(length: 255)]
+        #[Groups(['issue:read'])]
         private string $libelle,
 
         #[ORM\Column(length: 255)]
+        #[Groups(['issue:read'])]
         private ?string $image = 'image.png',
     ) {
         $this->issues = new ArrayCollection();

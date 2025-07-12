@@ -73,12 +73,12 @@ export class ApiClient {
         }
 
         // Ajout du token dans les headers
-        options.headers = options.headers || {};
+        options = options || {};
         options.method = 'POST';
+        options.headers = options.headers || {};
         options.headers['Authorization'] = 'Bearer ' + this.accessToken;
         options.headers['Content-Type'] = 'application/ld+json';
-
-        options.body = JSON.stringify(data);
+        options.body = JSON.stringify(data)
 
         let response = await fetch(url, options);
 
@@ -158,13 +158,20 @@ export class ApiClient {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/ld+json',
-                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(data)
             });
-
         }
         if (!res.ok) throw new Error('Erreur lors de l’envoi');
         return res.json();
+    }
+
+    async fetchCategories() {
+        const res = await fetch(`${this.baseUrl}/issue_categories`, {
+            headers: { 'Accept': 'application/ld+json' }
+        });
+        if (!res.ok) throw new Error('Erreur lors du chargement des catégories');
+        const data = await res.json();
+        return data.member || [];
     }
 }
