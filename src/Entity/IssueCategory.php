@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ApiResource(
     operations: [
         new Get(),
-        new GetCollection(),
+        new GetCollection(normalizationContext: ['groups' => ['issueCategory:read']]),
     ]
 )]
 class IssueCategory
@@ -24,7 +24,7 @@ class IssueCategory
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['issue:read'])]
+    #[Groups(['issue:read', 'issueCategory:read'])]
     private ?int $id = null;
 
     /**
@@ -35,11 +35,11 @@ class IssueCategory
 
     public function __construct(
         #[ORM\Column(length: 255)]
-        #[Groups(['issue:read'])]
+        #[Groups(['issue:read', 'issueCategory:read'])]
         private string $libelle,
 
         #[ORM\Column(length: 255)]
-        #[Groups(['issue:read'])]
+        #[Groups(['issue:read', 'issueCategory:read'])]
         private ?string $image = 'image.png',
     ) {
         $this->issues = new ArrayCollection();
