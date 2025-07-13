@@ -71,8 +71,11 @@ class MenuAddIssue {
 
         try {
             await this.api.submitIssue(data);
-            this.stepper.reset();
+            window.dispatchEvent(new CustomEvent("issueAdded", {}));
             this.flashbag.success('Merci pour votre contribution !');
+            this.stepper.reset();
+
+            this.hide();
         } catch (e) {
             console.error(e);
         }
@@ -88,12 +91,6 @@ class MenuAddIssue {
 
     hide() {
         this.container.classList.add("hidden");
-    }
-
-    onComplete() {
-        // Soumission ou message final
-        this.stepper.reset();
-        // this.hide();
     }
 }
 

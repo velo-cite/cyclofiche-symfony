@@ -13,5 +13,10 @@ export class AppController {
             this.menuPrincipal.hide();
             this.menuAddIssue.show();
         });
+
+        window.addEventListener("issueAdded", (e) => {
+            this.menuPrincipal.show();
+            this.menuAddIssue.hide();
+        });
     }
 }
