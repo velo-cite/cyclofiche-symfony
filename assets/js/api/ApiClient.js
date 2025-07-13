@@ -3,6 +3,7 @@ import { decodeJwt } from 'jose';
 export class ApiClient {
     constructor(baseUrl = '/api') {
         this.baseUrl = baseUrl;
+        this.refreshToken = null;
         this.refreshTimer = null;
     }
 
@@ -56,6 +57,10 @@ export class ApiClient {
 
         const data = await response.json();
         await this.setTokens(data.token, data.refresh_token || this.refreshToken);
+    }
+
+    async isLogged() {
+        return null != this.accessToken;
     }
 
     async fetchWithAuth(url, options = {}, data = {}) {
@@ -148,10 +153,9 @@ export class ApiClient {
     }
 
     async submitIssue(data) {
-        const token = localStorage.getItem("jwt");
         let res = null;
 
-        if (token) {
+        if (this.accessToken) {
             res = await this.fetchWithAuth(`${this.baseUrl}/issues`, null, data)
         } else {
             res = await fetch(`${this.baseUrl}/issues`, {

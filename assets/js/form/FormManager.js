@@ -80,7 +80,7 @@ export class FormManager {
     }
 
     showStep(i) {
-        if (i === this.connectionStep && localStorage.getItem('jwt')) {
+        if (i === this.connectionStep && this.api.isLogged()) {
             this.currentStep++;
             i++;
         }
@@ -93,8 +93,7 @@ export class FormManager {
         const email = this.form.loginEmail.value;
         const password = this.form.loginPassword.value;
         try {
-            const { token } = await this.api.login(email, password);
-            localStorage.setItem("jwt", token);
+            await this.api.login(email, password);
             this.showStep(++this.currentStep);
         } catch (e) {
             alert(e.message);
