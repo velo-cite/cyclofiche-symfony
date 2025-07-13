@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Cyclofiche - Vélo-Cité{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
@@ -23,113 +23,6 @@
         <div id="flashContainer" class="fixed z-10 top-0 w-full md:max-w-lg -translate-x-1/2 left-1/2"></div>
         {% block body %}{% endblock %}
         {% block menu %}
-            <div id="menu" class="fixed z-10 bottom-0 w-full md:max-w-lg -translate-x-1/2 left-1/2 bg-velocite rounded-t-3xl px-4 sm:px-6 md:px-8 py-4 shadow-lg text-white space-y-3 opacity-95">
-                <button id="btn-signaler-un-probleme" class="w-full bg-white text-sky-600 font-semibold py-2 rounded-lg hover:bg-gray-100">
-                    Signaler un problème
-                </button>
-
-                <div class="flex items-center justify-between">
-                    <label class="flex items-center justify-center py-2 space-x-2 w-full rounded-lg rounded-white border">
-                        <span>Afficher les signalements</span>
-                        <input type="checkbox" value="" class="sr-only peer" checked>
-                        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
-                    </label>
-                </div>
-
-                <div class="flex justify-between">
-                    <button class="font-medium py-2 px-4 rounded-lg rounded-white border hover:bg-gray-100 hover:text-velocite">
-                        Mon compte
-                    </button>
-                    <button class="font-medium py-2 px-4 rounded-lg rounded-white border hover:bg-gray-100 hover:text-velocite">
-                        Tutoriel
-                    </button>
-                </div>
-            </div>
-
-            <div id="menuIssue" class="fixed z-1 bottom-0 w-full md:max-w-lg -translate-x-1/2 left-1/2 bg-redimportant text-white rounded-t-3xl p-6 rounded-white border hidden">
-                <form id="reportForm" class="space-y-6">
-                    <!-- Étape 0 : Connexion ou saisie manuelle -->
-                    <div class="step">
-                        <h2 class="text-xl font-semibold mb-4">Connexion</h2>
-                        <p class="mb-4">Souhaitez-vous vous connecter ou saisir vos informations personnelles ?</p>
-
-                        <div id="loginBloc" class="mb-4">
-                            <button type="button" id="loginBtn" class="btn w-full bg-green-600 hover:bg-green-700">Se connecter</button>
-
-                            <!-- Formulaire de connexion simplifié -->
-                            <div id="loginForm" class="mt-6 hidden space-y-3">
-                                <input name="loginEmail" type="email" placeholder="Email" class="input" />
-                                <input name="loginPassword" type="password" placeholder="Password" class="input" />
-                                <button type="button" id="validateLogin" class="btn w-full bg-blue-500 hover:bg-blue-600">Valider</button>
-                            </div>
-                        </div>
-
-                        <hr class="mb-4">
-
-                        <div class="space-y-4">
-                            <button type="button" id="manualEntryBtn" class="btn w-full">Saisir mes informations personnelles</button>
-                        </div>
-
-                        <div id="manualInfoForm" class="mt-6 hidden space-y-3">
-                            <input name="email" type="email" placeholder="Email" class="input" />
-                            <input name="phone" type="tel" placeholder="Téléphone" class="input" />
-                            <input name="firstname" type="text" placeholder="Prénom" class="input" />
-                            <input name="lastname" type="text" placeholder="Nom" class="input" />
-                            <button type="button" id="validateManualInfoForm" class="btn w-full bg-blue-500 hover:bg-blue-600">Valider</button>
-                        </div>
-                    </div>
-                    <!-- Étape 1 : Lieu du signalement -->
-                    <div class="step">
-                        <h2 class="text-xl font-semibold mb-4">Lieu du signalement</h2>
-                        <label class="flex items-center mb-4">
-                            <input type="checkbox" id="useGps" class="sr-only peer">
-                            Utiliser ma position GPS actuelle
-                            <div class="ml-2 relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
-                        </label>
-                        <button type="button" id="manualBtn" class="btn bg-gray-500 hover:bg-gray-600 mb-4">Saisir l'adresse manuellement</button>
-                        <div id="manualAddress" class="hidden">
-                            <input name="streetNumber" placeholder="Numéro" class="input">
-                            <input name="streetName" placeholder="Rue" class="input">
-                            <input name="city" placeholder="Ville" class="input">
-                        </div>
-                        <input type="hidden" name="latitude">
-                        <input type="hidden" name="longitude">
-                    </div>
-
-                    <!-- Étape 2 : Type de signalement -->
-                    <div class="step hidden">
-                        <label class="text-xl font-semibold mb-4" for="categoryLabel">Type de signalement</label>
-                        <select name="categoryLabel" id="categoryLabel" required class="input">
-                            <option value="">-- Choisissez un type --</option>
-                        </select>
-                    </div>
-
-                    <!-- Étape 3 : Description -->
-                    <div class="step hidden">
-                        <label for="description" class="text-xl font-semibold mb-4">Description</label>
-                        <p class="mb-2 text-sm">Sélectionnez un ou plusieurs tags pour qualifier le problème</p>
-                        <textarea class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" name="description" id="description"></textarea>
-                    </div>
-
-                    <!-- Étape 4 : Photo -->
-                    <div class="step hidden">
-                        <h2 class="text-xl font-semibold mb-4">Photo (optionnel)</h2>
-                        <input name="photo" type="file" accept="image/*" class="input">
-                    </div>
-
-                    <!-- Étape 5 : Confirmation -->
-                    <div class="step hidden text-center">
-                        <h2 class="text-2xl font-bold text-green-600">Merci pour votre signalement !</h2>
-                        <p>Votre problème a été pris en compte.</p>
-                    </div>
-
-                    <!-- Navigation -->
-                    <div class="flex justify-between mt-6">
-                        <button type="button" id="prevBtn" class="btn hidden btn-red">< Précédent</button>
-                        <button type="button" id="nextBtn" class="btn btn-red">Suivant ></button>
-                    </div>
-                </form>
-            </div>
 
         {% endblock %}
     </body>
