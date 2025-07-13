@@ -40,7 +40,7 @@ export class MapManager {
     }
 
     dropMarker(lat, lng, form) {
-        let currentMarker = new maplibregl.Marker({draggable: true, color: "#00aeef",}).setLngLat([lng, lat]).addTo(this.map);
+        let currentMarker = new maplibregl.Marker({draggable: true, color: "#d40740",}).setLngLat([lng, lat]).addTo(this.map);
         this.map.flyTo({ center: [lng, lat], zoom: 16 });
 
         function onDragEnd() {
