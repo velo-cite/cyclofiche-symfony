@@ -21,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: IssueRepository::class)]
-#[ApiResource]
+#[ApiResource(paginationEnabled: false)]
 #[Post(
     uriTemplate: '/issues',
     denormalizationContext: ['groups' => ['issue:create']],
