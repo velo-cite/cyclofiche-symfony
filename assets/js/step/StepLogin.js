@@ -1,9 +1,12 @@
+import {FlashBag} from "../form/flashbag.js";
+
 class StepLogin {
     /**
      * @param {ApiClient} api
      */
-    constructor(api) {
+    constructor(api, callbackOnSuccess) {
         this.api = api;
+        this.callbackOnSuccess = callbackOnSuccess;
         this.element = document.createElement("div");
         this.element.classList.add("step");
 
@@ -40,19 +43,40 @@ class StepLogin {
         this.manualEntryBtn = this.element.querySelector("#manualEntryBtn");
         this.loginForm = this.element.querySelector("#loginForm");
         this.manualForm = this.element.querySelector("#manualInfoForm");
+        this.validateLogin = this.element.querySelector("#validateLogin");
 
         this._bindEvents();
+        this.flashbag = new FlashBag();
     }
 
     _bindEvents() {
+        const that = this;
+        this.validateLogin?.addEventListener("click", async () => {
+            const email = this.loginForm.querySelector("[name='loginEmail']").value.trim();
+            const password = this.loginForm.querySelector("[name='loginPassword']").value.trim();
+            this.api.login(email, password)
+                .then(function () {
+                    that.flashbag.success('Connexion réussie');
+                    that.callbackOnSuccess();
+                })
+                .catch(function (reason) {
+                    that.flashbag.error(reason);
+                })
+            ;
+        });
+
         this.loginBtn?.addEventListener("click", () => {
-            this.loginForm.classList.toggle("hidden");
+            this.loginBtn.classList.add("hidden");
+            this.loginForm.classList.remove("hidden");
+            this.manualEntryBtn.classList.remove("hidden");
             this.manualForm.classList.add("hidden");
         });
 
         this.manualEntryBtn?.addEventListener("click", () => {
-            this.manualForm.classList.toggle("hidden");
+            this.loginBtn.classList.remove("hidden");
             this.loginForm.classList.add("hidden");
+            this.manualEntryBtn.classList.add("hidden");
+            this.manualForm.classList.remove("hidden");
         });
     }
 

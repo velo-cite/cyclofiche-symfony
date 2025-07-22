@@ -24,7 +24,7 @@ class MenuAddIssue {
         this.stepsContainer.classList.add("steps-container");
 
         const steps = [
-            new StepLogin(api),
+            new StepLogin(api, () => this.stepper.nextStep()),
             new StepAddress(),
             new StepIssueType(api),
             new StepDescription(),
