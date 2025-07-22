@@ -59,7 +59,7 @@ export class ApiClient {
         await this.setTokens(data.token, data.refresh_token || this.refreshToken);
     }
 
-    async isLogged() {
+    isLogged() {
         return null != this.accessToken;
     }
 
