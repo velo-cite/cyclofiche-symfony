@@ -17,6 +17,7 @@ export class MapManager {
             splash?.classList.add("opacity-0");
             splash?.remove();
         });
+        this.newMarker = null;
     }
 
     addIssue(issue) {
@@ -40,14 +41,20 @@ export class MapManager {
     }
 
     dropMarker(lat, lng, form) {
-        let currentMarker = new maplibregl.Marker({draggable: true, color: "#d40740",}).setLngLat([lng, lat]).addTo(this.map);
+        let that = this;
+        this.newMarker = new maplibregl.Marker({draggable: true, color: "#d40740",}).setLngLat([lng, lat]).addTo(this.map);
         this.map.flyTo({ center: [lng, lat], zoom: 16 });
 
         function onDragEnd() {
-            const lngLat = currentMarker.getLngLat();
+            const lngLat = that.newMarker.getLngLat();
             form.latitude.value = lngLat.lat;
             form.longitude.value = lngLat.lng;
         }
-        currentMarker.on('dragend', onDragEnd);
+        this.newMarker.on('dragend', onDragEnd);
+    }
+
+    acceptNewIssue(issue) {
+        this.addIssue(issue);
+        this.newMarker.remove();
     }
 }

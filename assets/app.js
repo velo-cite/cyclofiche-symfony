@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error(err);
     }
 
-    const appController = new AppController(api);
+    const appController = new AppController(api, mapManager);
 
     window.addEventListener("addMarker", (e) => {
         const { latitude, longitude, form } = e.detail;

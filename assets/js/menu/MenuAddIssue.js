@@ -70,8 +70,8 @@ class MenuAddIssue {
         };
 
         try {
-            await this.api.submitIssue(data);
-            window.dispatchEvent(new CustomEvent("issueAdded", {}));
+            let res = await this.api.submitIssue(data);
+            window.dispatchEvent(new CustomEvent("issueAdded", {detail: res}));
             this.flashbag.success('Merci pour votre contribution !');
             this.stepper.reset();
 

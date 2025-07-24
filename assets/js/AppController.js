@@ -2,7 +2,7 @@ import MenuPrincipal from "./menu/MenuPrincipal.js";
 import MenuAddIssue from "./menu/MenuAddIssue.js";
 
 export class AppController {
-    constructor(api) {
+    constructor(api, mapManager) {
         this.menuPrincipal = new MenuPrincipal();
         this.menuAddIssue = new MenuAddIssue(api);
 
@@ -17,6 +17,7 @@ export class AppController {
         window.addEventListener("issueAdded", (e) => {
             this.menuPrincipal.show();
             this.menuAddIssue.hide();
+            mapManager.acceptNewIssue(e.detail);
         });
     }
 }
