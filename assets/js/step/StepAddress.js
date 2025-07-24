@@ -1,3 +1,5 @@
+import LoaderManager from "../LoaderManager.js";
+
 class StepAddress {
     constructor() {
         this.element = document.createElement("div");
@@ -28,6 +30,8 @@ class StepAddress {
         this.manualBtn = this.element.querySelector("#manualBtn");
         this.manualAddress = this.element.querySelector("#manualAddress");
 
+        this.loader = new LoaderManager("Récupération de votre position GPS...");
+
         this._bindEvents();
     }
 
@@ -46,9 +50,13 @@ class StepAddress {
     }
 
     _trySetGps() {
-        if (!navigator.geolocation) return;
+        if (!navigator.geolocation) {
+            return;
+        }
+        this.loader.show();
 
         navigator.geolocation.getCurrentPosition((position) => {
+            this.loader.hide();
             this.element.querySelector("input[name='latitude']").value = position.coords.latitude;
             this.element.querySelector("input[name='longitude']").value = position.coords.longitude;
 
@@ -60,6 +68,9 @@ class StepAddress {
                 }
             });
             window.dispatchEvent(event); // ou document.dispatchEvent(event)
+        }, (error) => {
+            this.loader.hide();
+            console.error('Erreur GPS :', error);
         });
     }
 

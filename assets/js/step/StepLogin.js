@@ -1,4 +1,5 @@
 import {FlashBag} from "../form/flashbag.js";
+import LoaderManager from "../LoaderManager.js";
 
 class StepLogin {
     /**
@@ -47,6 +48,7 @@ class StepLogin {
 
         this._bindEvents();
         this.flashbag = new FlashBag();
+        this.loader = new LoaderManager("Connexion en cours...");
     }
 
     _bindEvents() {
@@ -54,12 +56,16 @@ class StepLogin {
         this.validateLogin?.addEventListener("click", async () => {
             const email = this.loginForm.querySelector("[name='loginEmail']").value.trim();
             const password = this.loginForm.querySelector("[name='loginPassword']").value.trim();
+
+            that.loader.show();
             this.api.login(email, password)
                 .then(function () {
+                    that.loader.hide();
                     that.flashbag.success('Connexion réussie');
                     that.callbackOnSuccess();
                 })
                 .catch(function (reason) {
+                    that.loader.hide();
                     that.flashbag.error(reason);
                 })
             ;
