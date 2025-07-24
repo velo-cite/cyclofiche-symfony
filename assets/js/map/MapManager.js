@@ -42,6 +42,9 @@ export class MapManager {
 
     dropMarker(lat, lng, form) {
         let that = this;
+        if (this.newMarker)  {
+            this.newMarker.remove();
+        }
         this.newMarker = new maplibregl.Marker({draggable: true, color: "#d40740",}).setLngLat([lng, lat]).addTo(this.map);
         this.map.flyTo({ center: [lng, lat], zoom: 16 });
 
