@@ -52,7 +52,21 @@ class Stepper {
     }
 
     _updateButtons() {
-        this.prevBtn.classList.toggle("hidden", this.currentStepIndex === 0);
+        let prevStep = null;
+        let prevShouldBeSkip = false;
+        if (0 < this.currentStepIndex) {
+            prevStep = this.steps[this.currentStepIndex - 1];
+            if (prevStep && typeof prevStep.shouldBeSkip === "function") {
+                prevShouldBeSkip = prevStep.shouldBeSkip();
+            }
+        }
+
+        if (this.currentStepIndex === 0) {
+            this.prevBtn.classList.toggle("hidden", true);
+        } else {
+            this.prevBtn.classList.toggle("hidden", prevShouldBeSkip);
+        }
+
         this.nextBtn.textContent = this.currentStepIndex === this.steps.length - 1 ? "Terminer" : "Suivant >";
     }
 
