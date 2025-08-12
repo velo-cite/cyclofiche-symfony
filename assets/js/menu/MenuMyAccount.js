@@ -3,8 +3,9 @@ import {FlashBag} from "../form/flashbag.js";
 import LoaderManager from "../LoaderManager.js";
 
 class MenuMyAccount {
-    constructor(api) {
+    constructor(api, comeBackToPrincipalMenuCallback) {
         this.api = api;
+        this.comeBackToPrincipalMenuCallback = comeBackToPrincipalMenuCallback;
 
         // Conteneur des étapes
         this.stepsContainer = document.createElement('div');
@@ -23,7 +24,7 @@ class MenuMyAccount {
 
         this.btnConnexion = this.element.querySelector("#btn-connexion");
         this.btnDeconnexion = this.element.querySelector("#btn-deconnexion");
-        this.stepLoginOrSignIn = new StepLoginOrSignIn(this.api, () => this.initOrRefreshConnection());
+        this.stepLoginOrSignIn = new StepLoginOrSignIn(this.api, () => this.comeBackToPrincipalMenuCallback());
         this.initOrRefreshConnection();
         this.flashbag = new FlashBag();
         this.loader = new LoaderManager();
@@ -31,7 +32,7 @@ class MenuMyAccount {
         this.btnDeconnexion.addEventListener('click', () => {
             this.api.logout();
             this.flashbag.success('Déconnexion réussie');
-            this.initOrRefreshConnection();
+            this.comeBackToPrincipalMenuCallback();
         });
         this.btnConnexion.addEventListener('click', () => this.stepLoginOrSignIn.show());
     }
@@ -50,6 +51,7 @@ class MenuMyAccount {
     }
 
     show() {
+        this.initOrRefreshConnection();
         this.element.classList.remove("hidden");
     }
 

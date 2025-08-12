@@ -6,7 +6,7 @@ export class AppController {
     constructor(api, mapManager) {
         this.menuPrincipal = new MenuPrincipal();
         this.menuAddIssue = new MenuAddIssue(api);
-        this.menuMyAccount = new MenuMyAccount(api);
+        this.menuMyAccount = new MenuMyAccount(api, () => this.backToPrincipalMenu());
 
         this.menues = [this.menuPrincipal, this.menuAddIssue, this.menuMyAccount];
 
@@ -19,7 +19,6 @@ export class AppController {
         this.menuPrincipal.myAccountClick(() => {
             this.hideMenus();
             this.menuMyAccount.show();
-
         });
 
         window.addEventListener("issueAdded", (e) => {
@@ -37,5 +36,10 @@ export class AppController {
 
     hideMenus() {
         this.menues.forEach(menu => menu.hide());
+    }
+
+    backToPrincipalMenu() {
+        this.hideMenus();
+        this.menuPrincipal.show();
     }
 }

@@ -21,6 +21,20 @@ export class ApiClient {
         return data;
     }
 
+    async signIn(firstname, lastname, email, phone, password) {
+        const response = await fetch(`${this.baseUrl}/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, firstname, lastname, phone, password }),
+        });
+
+        const data = await response.json();
+        if (data.error) {
+            throw new Error(data.error);
+        }
+        return data;
+    }
+
     async logout() {
         this.accessToken = null;
         this.refreshToken = null;
