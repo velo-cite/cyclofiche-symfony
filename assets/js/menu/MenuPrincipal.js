@@ -18,12 +18,13 @@ class MenuPrincipal {
       </div>
 
       <div class="flex justify-between">
-        <button class="font-medium py-2 px-4 rounded-lg rounded-white border hover:bg-gray-100 hover:text-velocite">Mon compte</button>
+        <button id="btn-my-account" class="font-medium py-2 px-4 rounded-lg rounded-white border hover:bg-gray-100 hover:text-velocite">Mon compte</button>
         <button class="font-medium py-2 px-4 rounded-lg rounded-white border hover:bg-gray-100 hover:text-velocite">Tutoriel</button>
       </div>
     `;
 
         this.buttonReport = this.element.querySelector("#btn-signaler-un-probleme");
+        this.myAccountBtn = this.element.querySelector("#btn-my-account");
     }
 
     show() {
@@ -40,6 +41,10 @@ class MenuPrincipal {
 
     onReportClick(callback) {
         this.buttonReport.addEventListener("click", callback);
+    }
+
+    myAccountClick(callback) {
+        this.myAccountBtn.addEventListener("click", callback);
     }
 }
 

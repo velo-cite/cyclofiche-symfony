@@ -1,11 +1,11 @@
 import {FlashBag} from "../form/flashbag.js";
 // Dans MenuAddIssue.js (extrait simplifié)
-import Stepper from "../step/Stepper.js";
-import StepLogin from "../step/StepLogin.js";
-import StepAddress from "../step/StepAddress.js";
-import StepIssueType from "../step/StepIssueType.js";
-import StepDescription from "../step/StepDescription.js";
-import StepPhoto from "../step/StepPhoto.js";
+import Stepper from "../stepAddIssue/Stepper.js";
+import StepLogin from "../stepAddIssue/StepLogin.js";
+import StepAddress from "../stepAddIssue/StepAddress.js";
+import StepIssueType from "../stepAddIssue/StepIssueType.js";
+import StepDescription from "../stepAddIssue/StepDescription.js";
+import StepPhoto from "../stepAddIssue/StepPhoto.js";
 
 class MenuAddIssue {
     constructor(api) {
