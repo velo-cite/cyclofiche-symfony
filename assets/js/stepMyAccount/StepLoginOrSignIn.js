@@ -81,16 +81,18 @@ class StepLoginOrSignIn {
             const lastname = this.inscriptionForm.querySelector("[name='lastname']").value.trim();
             const password = this.inscriptionForm.querySelector("[name='password']").value;
 
-            this.loader.show();
+            if (this.validateInscription()) {
+                this.loader.show();
 
-            try {
-                await this.api.signIn(firstname, lastname, email, phone, password);
-                this.flashbag.success('Inscription réussie');
-                this.callbackOnSuccess();
-            } catch (err) {
-                this.flashbag.error(err.message || 'Une erreur est survenue');
-            } finally {
-                this.loader.hide();
+                try {
+                    await this.api.signIn(firstname, lastname, email, phone, password);
+                    this.flashbag.success('Inscription réussie');
+                    this.callbackOnSuccess();
+                } catch (err) {
+                    this.flashbag.error(err.message || 'Une erreur est survenue');
+                } finally {
+                    this.loader.hide();
+                }
             }
         });
 
@@ -122,14 +124,23 @@ class StepLoginOrSignIn {
         let passwordValue = this.inscriptionForm.querySelector(`[name='password']`).value;
         let passwordRepeatedValue = this.inscriptionForm.querySelector(`[name='passwordRepeated']`).value;
 
+        requiredFields.forEach(function (name) {
+            if ("" === this.inscriptionForm.querySelector(`[name='${name}']`).value.trim()) {
+                this.flashbag.error(`Le champ ${name} ne doit pas être vide.`);
+                return false;
+            }
+        }, this);
+
         if (passwordValue.trim().length < 7) {
             this.flashbag.error('Mot de passe trop court');
             return false;
         }
+        if (passwordValue !== passwordRepeatedValue) {
+            this.flashbag.error('Les 2 mots de passe sont différents.');
+            return false;
+        }
 
-        return requiredFields.every(name =>
-            this.inscriptionForm.querySelector(`[name='${name}']`).value.trim() !== ""
-        ) && passwordValue === passwordRepeatedValue;
+        return true;
     }
 
     reset() {
