@@ -3,10 +3,12 @@
 {% block title %}{{ 'front.forgotpassword.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>{{ 'front.forgotpassword.title'|trans }}</h1>
+    <h2 class="text-xl font-semibold mb-4">{{ 'front.forgotpassword.title'|trans }}</h2>
 
-    {{ form_start(resetForm) }}
+    <div class="mb-4">
+    {{ form_start(resetForm, {attr: {class: "mt-6 space-y-3"}}) }}
         {{ form_row(resetForm.plainPassword) }}
         <button class="btn btn-primary">{{ 'front.button.save'|trans }}</button>
     {{ form_end(resetForm) }}
+    </div>
 {% endblock %}

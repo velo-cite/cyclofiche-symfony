@@ -77,6 +77,18 @@ export class ApiClient {
         return null != this.accessToken;
     }
 
+    async requestPasswordReset(email) {
+        const res = await fetch(`${this.baseUrl}/reset-password/request`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || data.message);
+        return data;
+    }
+
     async fetchWithAuth(url, options = {}, data = {}) {
         this.loadTokens();
 

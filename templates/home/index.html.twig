@@ -1,5 +1,29 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" sizes="512x512"
+          href="{{ asset('img/cropped-VELO-CITE-2023_couleur-horizontal-1.png') }}">
+    <link rel="manifest" crossorigin="use-credentials" href="{{ asset('manifest.json') }}"/>
+    <title>{% block title %}Cyclofiche - Vélo-Cité{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+    {% endblock %}
 
-{% block body %}
-    <div id="map"></div>
-{% endblock %}
+    {% block javascripts %}
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
+    {% endblock %}
+</head>
+<body data-page="{{ app.current_route }}">
+<!-- Splash Screen -->
+<div id="splash"
+     class="fixed inset-0 bg-velocite flex flex-col items-center justify-center text-white z-50 transition-opacity duration-1000">
+    <img src="{{ asset('img/cropped-VELO-CITE-2023_couleur-horizontal-1.png') }}" alt="">
+    <h1 class="text-4xl font-bold animate-pulse">Bienvenue</h1>
+    <p class="mt-4 text-lg">Chargement en cours...</p>
+</div>
+<div id="flashContainer" class="fixed z-10 top-0 w-full md:max-w-lg -translate-x-1/2 left-1/2"></div>
+<div id="map"></div>
+</body>
+</html>

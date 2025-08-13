@@ -4,9 +4,12 @@ import LoaderManager from "../LoaderManager.js";
 class StepLoginOrSignIn {
     /**
      * @param {ApiClient} api
+     * @param {StepResetPassword} stepResetPassword
+     * @param function callbackOnSuccess
      */
-    constructor(api, callbackOnSuccess) {
+    constructor(api, stepResetPassword, callbackOnSuccess) {
         this.api = api;
+        this.stepResetPassword = stepResetPassword;
         this.callbackOnSuccess = callbackOnSuccess;
         this.element = document.createElement("div");
         this.element.classList.add("step");
@@ -21,6 +24,7 @@ class StepLoginOrSignIn {
         <div id="loginForm" class="mt-6 hidden space-y-3">
           <input name="loginEmail" type="email" placeholder="Email" class="input" />
           <input name="loginPassword" type="password" placeholder="Password" class="input" />
+          <button type="button" id="forgotPassword" class="underline">Mot de passe oublié</button>
           <button type="button" id="validateLogin" class="btn w-full bg-blue-500 hover:bg-blue-600">Valider</button>
         </div>
       </div>
@@ -42,6 +46,7 @@ class StepLoginOrSignIn {
       </div>
     `;
 
+        this.forgotPasswordBtn = this.element.querySelector("#forgotPassword");
         this.loginBtn = this.element.querySelector("#loginBtn");
         this.manualEntryBtn = this.element.querySelector("#manualEntryBtn");
         this.loginForm = this.element.querySelector("#loginForm");
@@ -108,6 +113,11 @@ class StepLoginOrSignIn {
             this.loginForm.classList.add("hidden");
             this.manualEntryBtn.classList.add("hidden");
             this.inscriptionForm.classList.remove("hidden");
+        });
+
+        this.forgotPasswordBtn.addEventListener("click", () => {
+            this.hide();
+            this.stepResetPassword.show();
         });
     }
 
