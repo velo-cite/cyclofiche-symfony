@@ -2,17 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\RefreshToken;
 use App\Entity\User;
-use App\Form\RegistrationFormType;
 use App\Model\User\UserRegistered;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
+use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenManagerInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,7 +33,6 @@ class RegistrationController extends AbstractController
 
     #[Route('/api/register', name: 'api_register', methods: ['POST'])]
     public function register(
-        Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
         EntityManagerInterface $entityManager,
         #[MapRequestPayload] UserRegistered $dto,
@@ -60,7 +59,7 @@ class RegistrationController extends AbstractController
         }
 
         // generate a signed url and email it to the user
-        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+        $this->emailVerifier->sendEmailConfirmation('app-verify-email', $user,
             (new TemplatedEmail())
                 ->from(new Address('no-reply@velo-cite.org', 'No Reply Velo-Cité'))
                 ->to((string) $user->getEmail())
@@ -71,32 +70,49 @@ class RegistrationController extends AbstractController
         return $this->json(['message' => $this->translator->trans('front.user.confirmationEmailSend')], 201);
     }
 
-    #[Route('/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, UserRepository $userRepository, Security $security): Response
+    #[Route('/api/verify/email', name: 'api_verify_email')]
+    public function verifyUserEmail(
+        Request $request,
+        UserRepository $userRepository,
+        JWTTokenManagerInterface $JWTManager,
+        RefreshTokenManagerInterface $refreshTokenManager
+    ): JsonResponse
     {
         $id = $request->query->get('id');
 
         if (null === $id) {
-            return $this->redirectToRoute('app_register');
+            return $this->json(['error' => 'ID manquant'], 400);
         }
 
         $user = $userRepository->find($id);
 
         if (null === $user) {
-            return $this->redirectToRoute('app_register');
+            return $this->json(['error' => 'Utilisateur introuvable'], 404);
         }
 
         // validate email confirmation link, sets User::isVerified=true and persists
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $user);
         } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $this->translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
-
-            return $this->redirectToRoute('app_register');
+            return $this->json([
+                'error' => $this->translator->trans($exception->getReason(), [], 'VerifyEmailBundle'),
+            ], 400);
         }
 
         $this->addFlash('success', $this->translator->trans('front.user.confirmationEmailDone'));
+        $token = $JWTManager->create($user);
 
-        return $security->login($user, 'form_login', 'main');
+        // Génération du RefreshToken (valide par ex. 1 mois)
+        $refreshToken = new RefreshToken();
+        $refreshToken->setUsername($user->getUserIdentifier());
+        $refreshToken->setRefreshToken(bin2hex(random_bytes(64)));
+        $refreshToken->setValid((new \DateTime())->modify('+1 month'));
+        $refreshTokenManager->save($refreshToken);
+
+        return $this->json([
+            'message' => $this->translator->trans('front.user.confirmationEmailDone'),
+            'token' => $token,
+            'refresh_token' => $refreshToken->getRefreshToken(),
+        ]);
     }
 }

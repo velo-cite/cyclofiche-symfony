@@ -5,7 +5,7 @@ export class MapManager {
     constructor(containerId) {
         this.map = new maplibregl.Map({
             container: containerId,
-            style: 'map/style.json',
+            style: '/map/style.json',
             center: [-0.61, 44.85],
             zoom: 12,
         });

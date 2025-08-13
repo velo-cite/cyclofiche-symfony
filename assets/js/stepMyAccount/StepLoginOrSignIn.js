@@ -85,8 +85,8 @@ class StepLoginOrSignIn {
                 this.loader.show();
 
                 try {
-                    await this.api.signIn(firstname, lastname, email, phone, password);
-                    this.flashbag.success('Inscription réussie');
+                    let data = await this.api.signIn(firstname, lastname, email, phone, password);
+                    this.flashbag.success(data.message);
                     this.callbackOnSuccess();
                 } catch (err) {
                     this.flashbag.error(err.message || 'Une erreur est survenue');
