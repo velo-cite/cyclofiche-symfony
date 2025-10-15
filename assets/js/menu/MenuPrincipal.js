@@ -11,8 +11,8 @@ class MenuPrincipal {
 
       <div class="flex items-center justify-between">
         <label class="flex items-center justify-center py-2 space-x-2 w-full rounded-lg rounded-white border">
-          <span>Afficher les signalements</span>
-          <input type="checkbox" value="" class="sr-only peer" checked>
+          <span>Afficher tous les signalements</span>
+          <input id="display-signalement" type="checkbox" value="" class="sr-only peer" checked>
           <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
         </label>
       </div>
@@ -24,6 +24,7 @@ class MenuPrincipal {
     `;
 
         this.buttonReport = this.element.querySelector("#btn-signaler-un-probleme");
+        this.displaySignalementBtn = this.element.querySelector("#display-signalement");
         this.myAccountBtn = this.element.querySelector("#btn-my-account");
     }
 
@@ -45,6 +46,10 @@ class MenuPrincipal {
 
     myAccountClick(callback) {
         this.myAccountBtn.addEventListener("click", callback);
+    }
+
+    toggleDisplaySignalementBtnClick(callback) {
+        this.displaySignalementBtn.addEventListener("click", callback);
     }
 }
 

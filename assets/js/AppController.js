@@ -20,6 +20,9 @@ export class AppController {
             this.hideMenus();
             this.menuMyAccount.show();
         });
+        this.menuPrincipal.toggleDisplaySignalementBtnClick(() => {
+            window.dispatchEvent(new CustomEvent("toggleMarkerOfOther"));
+        });
 
         window.addEventListener("issueAdded", (e) => {
             this.hideMenus();

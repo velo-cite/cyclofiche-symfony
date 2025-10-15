@@ -1,4 +1,4 @@
-import {FlashBag} from "../form/flashbag.js";
+import singletonFlashBag from "../form/flashbag.js";
 import LoaderManager from "../LoaderManager.js";
 
 class StepLogin {
@@ -47,7 +47,7 @@ class StepLogin {
         this.validateLogin = this.element.querySelector("#validateLogin");
 
         this._bindEvents();
-        this.flashbag = new FlashBag();
+        this.flashbag = singletonFlashBag.getInstance();
         this.loader = new LoaderManager("Connexion en cours...");
     }
 

@@ -11,19 +11,21 @@ import './vendor/maplibre-gl/dist/maplibre-gl.min.css';
 import { MapManager } from './js/map/MapManager.js';
 import { ApiClient } from './js/api/ApiClient.js';
 import { AppController } from './js/AppController.js';
-import {FlashBag} from "./js/form/flashbag.js";
+import singletonFlashBag from "./js/form/flashbag.js";
 
 const api = new ApiClient();
 api.loadTokens(); // Pour réinitialiser après rechargement
-let flashbag = new FlashBag();
+let flashbag = singletonFlashBag.getInstance();
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const mapManager = new MapManager('map');
+    const mapManager = new MapManager('map', api);
 
     // Charge les markers
     try {
         const issues = await api.fetchIssues();
-        issues.forEach(issue => mapManager.addIssue(issue));
+        mapManager.map.on("load", () => {
+            issues.forEach(issue => mapManager.addIssue(issue));
+        });
     } catch (err) {
         console.error(err);
     }
@@ -33,6 +35,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.addEventListener("addMarker", (e) => {
         const { latitude, longitude, form } = e.detail;
         mapManager.dropMarker(latitude, longitude, form);
+    });
+
+    window.addEventListener("toggleMarkerOfOther", (e) => {
+        mapManager.toggleMarkerOfOther();
     });
 
     const page = document.body.dataset.page;

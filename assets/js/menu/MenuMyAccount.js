@@ -1,5 +1,5 @@
 import StepLoginOrSignIn from "../stepMyAccount/StepLoginOrSignIn.js";
-import {FlashBag} from "../form/flashbag.js";
+import singletonFlashBag from "../form/flashbag.js";
 import LoaderManager from "../LoaderManager.js";
 import StepResetPassword from "../stepMyAccount/StepResetPassword.js";
 
@@ -36,7 +36,7 @@ class MenuMyAccount {
         });
 
         this.initOrRefreshConnection();
-        this.flashbag = new FlashBag();
+        this.flashbag = singletonFlashBag.getInstance();
         this.loader = new LoaderManager();
 
         this.btnDeconnexion.addEventListener('click', () => {

@@ -1,5 +1,12 @@
-export class FlashBag {
+let instance;
+
+class FlashBag {
     constructor(containerId = 'flashContainer') {
+        if (instance) {
+            throw new Error("You can only create one instance!");
+        }
+        instance = this;
+
         this.container = document.getElementById(containerId);
         this.messages = [];
         this.config = {
@@ -29,15 +36,11 @@ export class FlashBag {
 
         if (!this.container) {
             console.error(`FlashBag: Container with id '${containerId}' not found`);
-            return;
         }
-
-        this.init();
     }
 
-    init() {
-        // Le container est déjà stylé avec Tailwind dans le HTML
-        console.log('FlashBag initialized');
+    getInstance() {
+        return this;
     }
 
     success(message, duration = this.config.defaultDuration) {
@@ -208,3 +211,6 @@ export class FlashBag {
         this.config = { ...this.config, ...newConfig };
     }
 }
+
+const singletonFlashBag = Object.freeze(new FlashBag());
+export default singletonFlashBag;

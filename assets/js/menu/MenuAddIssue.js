@@ -1,4 +1,4 @@
-import {FlashBag} from "../form/flashbag.js";
+import singletonFlashBag from "../form/flashbag.js";
 // Dans MenuAddIssue.js (extrait simplifié)
 import Stepper from "../stepAddIssue/Stepper.js";
 import StepLogin from "../stepAddIssue/StepLogin.js";
@@ -51,7 +51,7 @@ class MenuAddIssue {
         this.divNavigation.appendChild(this.nextBtn);
         this.container.appendChild(this.divNavigation);
 
-        this.flashbag = new FlashBag();
+        this.flashbag = singletonFlashBag.getInstance();
     }
 
     async submit() {

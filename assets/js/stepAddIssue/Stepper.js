@@ -1,4 +1,4 @@
-import {FlashBag} from "../form/flashbag.js";
+import singletonFlashBag from "../form/flashbag.js";
 class Stepper {
     /**
      * @param {Array} steps - tableau d'instances des étapes (objets avec méthodes show, hide, validate, reset, getDOM)
@@ -14,7 +14,7 @@ class Stepper {
         this.nextBtn = nextBtn;
         this.currentStepIndex = 0;
         this.onComplete = onComplete;
-        this.flashbag = new FlashBag();
+        this.flashbag = singletonFlashBag.getInstance();
 
         this._init();
     }
