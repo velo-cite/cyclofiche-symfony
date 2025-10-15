@@ -5,6 +5,7 @@ export class ApiClient {
         this.baseUrl = baseUrl;
         this.refreshToken = null;
         this.refreshTimer = null;
+        this.emailUserCrypted = null;
     }
 
     async login(email, password) {
@@ -32,6 +33,7 @@ export class ApiClient {
         if (data.error) {
             throw new Error(data.error);
         }
+        this.emailUserCrypted = data.email_crypted;
         return data;
     }
 
@@ -193,6 +195,8 @@ export class ApiClient {
             });
         }
         if (!res.ok) throw new Error('Erreur lors de l’envoi');
+        this.emailUserCrypted = res.emailCrypted;
+
         return res.json();
     }
 

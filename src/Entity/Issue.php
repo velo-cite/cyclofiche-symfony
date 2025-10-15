@@ -60,6 +60,10 @@ class Issue
     #[Groups(['issue:read'])]
     private ?string $commentModerator = null;
 
+    #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['issue:read'])]
+    private ?string $emailCrypted = null;
+
     public function __construct(
         #[ORM\ManyToOne(inversedBy: 'issues')]
         #[ORM\JoinColumn(nullable: false)]
@@ -102,6 +106,7 @@ class Issue
         private ?string $phone = null,
     ) {
         $this->photos = new ArrayCollection();
+        $this->emailCrypted = md5($this->email);
     }
 
     public static function createFromIssueCreated(IssueCreated $created): self
@@ -202,6 +207,11 @@ class Issue
     public function getEmail(): ?string
     {
         return $this->email;
+    }
+
+    public function getEmailCrypted(): ?string
+    {
+        return $this->emailCrypted;
     }
 
     public function getPhone(): ?string

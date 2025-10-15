@@ -7,6 +7,7 @@ use App\Model\UserCreated;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -47,6 +48,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = ['ROLE_USER'];
 
+    #[ORM\Column]
+    #[Groups(['user:read'])]
+    private ?string $emailCrypted = null;
+
     public function __construct(
         #[ORM\Column(length: 180)]
         #[Groups(['user:read'])]
@@ -62,6 +67,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         private ?string $phone = null,
     ) {
         $this->issues = new ArrayCollection();
+        $this->emailCrypted = md5($this->email);
     }
 
     public static function create(UserCreated $userCreatedAdmin): self
@@ -107,6 +113,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
+    }
+
+    public function getEmailCrypted(): ?string
+    {
+        return $this->emailCrypted;
     }
 
     /**
