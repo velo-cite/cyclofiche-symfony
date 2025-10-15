@@ -1,3 +1,14 @@
+# Installation
+```bash
+git clone git@github.com:velo-cite/cyclofiche-symfony.git
+composer install
+docker compose up
+symfony server:start
+php bin/console doctrine:migration:migrate
+php bin/console doctrine:fixtures:load
+php bin/console lexik:jwt:generate-keypair
+```
+
 # TODO list 
 
 - 3 rôles (utilisateurs, modérateurs, modérateurs Bordeaux Métropole)
@@ -30,7 +41,7 @@ export csv (avec filtre)
 
 Affichage du délai de traitement / temps de (non) réponse ?
 
-Utilisateur : possibilité de marquer l'observation comme résolue
+Utilisateur : possibilité de marquer l'observation comme résolue  
 Pour les autres utilisateurs : signaler le traitement effectué (observation de terrain)
 
 Suivi par mail à chaque changement d'état (de la part de VC ou de la métropole) 
