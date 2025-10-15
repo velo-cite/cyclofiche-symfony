@@ -7,6 +7,7 @@ symfony server:start
 php bin/console doctrine:migration:migrate
 php bin/console doctrine:fixtures:load
 php bin/console lexik:jwt:generate-keypair
+php bin/console tailwind:build
 ```
 
 # TODO list 
